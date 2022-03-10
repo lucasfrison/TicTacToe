@@ -1,9 +1,7 @@
-/*1. int jogada_usuario(int lin, int col, char jog): esta função preenche a posição informada pelos
-parâmetros lin (linha) e col (coluna) com ‘X’ ou ‘O’ que são passados para a função através de
-parâmetro jog. A função retorna um dos seguintes valores:
-0 – se a jogada é válida
-1 – se a posição informada é inválida
-2 – se a posição informada já está preenchida*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+
 int jogada_usuario(int linha, int coluna, char jogada);
 
 /*2. void jogada_computador(char jog, int nivel): esta função realiza a jogada do computador. O
@@ -34,7 +32,20 @@ int verifica_ganhador(char jogada);
 char corpo[3][3];
 
 void main() {
+    inicializa_velha();
+}
 
+/*1. int jogada_usuario(int lin, int col, char jog): esta função preenche a posição informada pelos
+parâmetros lin (linha) e col (coluna) com ‘X’ ou ‘O’ que são passados para a função através de
+parâmetro jog. A função retorna um dos seguintes valores:
+0 – se a jogada é válida
+1 – se a posição informada é inválida
+2 – se a posição informada já está preenchida*/
+int jogada_usuario(int linha, int coluna, char jogada) {
+    if ((jogada == 'X') || (jogada == 'O')) 
+        if ((linha <= 3)&&(coluna <= 3))
+            if (corpo[linha][coluna] == ' ')
+                corpo[linha][coluna] = jogada;
 }
 
 void jogada_computador(char jogada, int nivel);
@@ -47,7 +58,7 @@ void inicializa_velha(){
     int i, j;
     for (i = 0; i < 3; i++)
         for (j = 0; j <3; j++)
-            corpo[i][j] = "";
+            corpo[i][j] = ' ';
 }
 
 int verifica_ganhador(char jogada);
