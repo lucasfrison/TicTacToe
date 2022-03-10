@@ -1,38 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 
 int jogada_usuario(int linha, int coluna, char jogada);
 
-/*2. void jogada_computador(char jog, int nivel): esta função realiza a jogada do computador. O
-parâmetro jog define se o computador é ‘X’ ou ‘O’ e o parâmetro nível define se a jogada do
-computador é de nível básico, intermediário ou avançado. Você deve criar uma função para
-jogada nível básico do computador; outra função para a jogada nível intermediário do
-computador; e outra função para a jogada nível avançado do computador. Estas funções
-deverão ser chamadas dentro desta função jogada_computador.*/
 void jogada_computador(char jogada, int nivel);
 
-/*3. int menu( ): esta função retorna 1 se o usuário quer jogar contra o computador ou 2 caso o
-usuário queira jogar contra outro usuário. Caso o usuário queira jogar contra o computador ele
-também deve escolher o nível da jogada do computador: básico, intermediário ou avançado.*/
 int menu();
 
-/*4. void escolha_simb(char *jog1, char *jog2 ): esta função define via entrada do usuário quem
-é o jogador ‘X’ e quem é o jogador ‘O’.*/
 void escolha_simb(char *jogador1, char *jogador2);
 
-//5. void inicializa_velha( ): esta função inicializa a matriz do jogo da velha com vazio.
 void inicializa_velha();
 
-/*6. int verifica_ganhador(char jog): esta função retorna 1 se o jogador ganhou e zero caso
-contrário. O parâmetro jog conterá ‘X’ ou ‘O’.*/
 int verifica_ganhador(char jogada);
 
 //corpo do jogo
 char corpo[3][3];
 
 void main() {
-    inicializa_velha();
+    
 }
 
 /*1. int jogada_usuario(int lin, int col, char jog): esta função preenche a posição informada pelos
@@ -48,12 +35,49 @@ int jogada_usuario(int linha, int coluna, char jogada) {
                 corpo[linha][coluna] = jogada;
 }
 
+/*2. void jogada_computador(char jog, int nivel): esta função realiza a jogada do computador. O
+parâmetro jog define se o computador é ‘X’ ou ‘O’ e o parâmetro nível define se a jogada do
+computador é de nível básico, intermediário ou avançado. Você deve criar uma função para
+jogada nível básico do computador; outra função para a jogada nível intermediário do
+computador; e outra função para a jogada nível avançado do computador. Estas funções
+deverão ser chamadas dentro desta função jogada_computador.*/
 void jogada_computador(char jogada, int nivel);
 
-int menu();
+/*3. int menu( ): esta função retorna 1 se o usuário quer jogar contra o computador ou 2 caso o
+usuário queira jogar contra outro usuário. Caso o usuário queira jogar contra o computador ele
+também deve escolher o nível da jogada do computador: básico, intermediário ou avançado.*/
+int menu() {
+    int escolha;
+    char jogador1, jogador2, simbolo[3] = "XO";
+    printf("Bem vindo(a)! Escolha o modo de jogo.\n");
+    printf("1. Jogar contra o computador.");
+    printf("2. Jogar contra outro jogador.");
+    scanf("%d", &escolha);
+    switch (escolha)
+    {
+    case 1:
+        return 1;
+        break;
+    
+    case 2:
+        printf("Jogador 1: Escolha seu simbolo:\n");
+        printf("1. X.    2. O\n");
+        scanf("%d", &escolha);
+        escolha -= 1;
+        jogador1 = simbolo[escolha];
+        if (jogador1 == simbolo[0])
+            jogador2 = simbolo[1];
+        else jogador2 = simbolo[0];    
+        return 2;
+        break;
+    }
+}
 
+/*4. void escolha_simb(char *jog1, char *jog2 ): esta função define via entrada do usuário quem
+é o jogador ‘X’ e quem é o jogador ‘O’.*/
 void escolha_simb(char *jogador1, char *jogador2);
 
+//5. void inicializa_velha( ): esta função inicializa a matriz do jogo da velha com vazio.
 void inicializa_velha(){
     int i, j;
     for (i = 0; i < 3; i++)
@@ -61,4 +85,6 @@ void inicializa_velha(){
             corpo[i][j] = ' ';
 }
 
+/*6. int verifica_ganhador(char jog): esta função retorna 1 se o jogador ganhou e zero caso
+contrário. O parâmetro jog conterá ‘X’ ou ‘O’.*/
 int verifica_ganhador(char jogada);
