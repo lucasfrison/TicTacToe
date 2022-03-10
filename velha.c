@@ -36,3 +36,18 @@ char corpo[3][3];
 void main() {
 
 }
+
+void jogada_computador(char jogada, int nivel);
+
+int menu();
+
+void escolha_simb(char *jogador1, char *jogador2);
+
+void inicializa_velha(){
+    int i, j;
+    for (i = 0; i < 3; i++)
+        for (j = 0; j <3; j++)
+            corpo[i][j] = "";
+}
+
+int verifica_ganhador(char jogada);
