@@ -33,8 +33,8 @@ parâmetro jog. A função retorna um dos seguintes valores:
 int jogada_usuario(int linha, int coluna, char jogada) {
     if ((jogada == 'X') || (jogada == 'O')) 
         if ((linha <= 3)&&(coluna <= 3))
-            if (corpo[linha][coluna] == ' ')
-                corpo[linha][coluna] = jogada;
+            if (corpo[linha-1][coluna-1] == ' ')
+                corpo[linha-1][coluna-1] = jogada;
 }
 
 /*2. void jogada_computador(char jog, int nivel): esta função realiza a jogada do computador. O
