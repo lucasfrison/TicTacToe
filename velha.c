@@ -21,7 +21,7 @@ void tabuleiro();
 char corpo[3][3];
 
 void main() {
-     
+    
 }
 
 /*1. int jogada_usuario(int lin, int col, char jog): esta função preenche a posição informada pelos
@@ -91,13 +91,15 @@ void escolha_simb(char *jogador1, char *jogador2) {
 void inicializa_velha(){
     int i, j;
     for (i = 0; i < 3; i++)
-        for (j = 0; j <3; j++)
+        for (j = 0; j < 3; j++)
             corpo[i][j] = ' ';
 }
 
 /*6. int verifica_ganhador(char jog): esta função retorna 1 se o jogador ganhou e zero caso
 contrário. O parâmetro jog conterá ‘X’ ou ‘O’.*/
-int verifica_ganhador(char jogada);
+int verifica_ganhador(char jogada) {
+
+}
 
 //PRONTO Formata a matriz 
 void tabuleiro() {
@@ -105,6 +107,7 @@ void tabuleiro() {
     for (i = 0; i < 3; i++)
         for (j = 0; j < 3; j++)
             if ((j % 2 == 0)&&(j != 0))
-                printf("   %c\n\n", corpo[i][j]);
-            else printf("   %c", corpo[i][j]);    
+                if (i != 2) printf("  %c\n=================\n", corpo[i][j]);
+                else printf("  %c\n", corpo[i][j]);
+            else printf("  %c  |", corpo[i][j]);    
 }
