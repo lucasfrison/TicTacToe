@@ -47,37 +47,45 @@ void jogada_computador(char jogada, int nivel);
 usuário queira jogar contra outro usuário. Caso o usuário queira jogar contra o computador ele
 também deve escolher o nível da jogada do computador: básico, intermediário ou avançado.*/
 int menu() {
-    int escolha;
-    char jogador1, jogador2, simbolo[3] = "XO";
-    printf("Bem vindo(a)! Escolha o modo de jogo.\n");
-    printf("1. Jogar contra o computador.");
-    printf("2. Jogar contra outro jogador.");
-    scanf("%d", &escolha);
+    int escolha = 0;
+    while ((escolha > 2)||(escolha < 1)) {
+        printf("Bem vindo(a)! Escolha o modo de jogo.\n");
+        printf("1. Jogar contra o computador.\n");
+        printf("2. Jogar contra outro jogador.\n");
+        scanf("%d", &escolha);
+        system("clear");
+    }    
     switch (escolha)
     {
     case 1:
-        return 1;
+        
+        
         break;
     
-    case 2:
-        printf("Jogador 1: Escolha seu simbolo:\n");
-        printf("1. X.    2. O\n");
-        scanf("%d", &escolha);
-        escolha -= 1;
-        jogador1 = simbolo[escolha];
-        if (jogador1 == simbolo[0])
-            jogador2 = simbolo[1];
-        else jogador2 = simbolo[0];    
-        return 2;
+    case 2:  //PRONTO            
+        
         break;
     }
+    return escolha;
 }
 
 /*4. void escolha_simb(char *jog1, char *jog2 ): esta função define via entrada do usuário quem
 é o jogador ‘X’ e quem é o jogador ‘O’.*/
-void escolha_simb(char *jogador1, char *jogador2);
+//CHAMAR NA MAIN
+void escolha_simb(char *jogador1, char *jogador2) {
+    int escolha;
+    char simbolo[3] = "XO";
+    printf("Jogador 1: Escolha seu simbolo:\n");
+    printf("1. X.    2. O\n");
+    scanf("%d", &escolha);
+    escolha -= 1;
+    *jogador1 = simbolo[escolha];
+    if (*jogador1 == simbolo[0])
+        *jogador2 = simbolo[1];
+    else *jogador2 = simbolo[0]; 
+}  
 
-//5. void inicializa_velha( ): esta função inicializa a matriz do jogo da velha com vazio.
+//PRONTO  5. void inicializa_velha( ): esta função inicializa a matriz do jogo da velha com vazio.
 void inicializa_velha(){
     int i, j;
     for (i = 0; i < 3; i++)
