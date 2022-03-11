@@ -92,14 +92,14 @@ void inicializa_velha(){
     int i, j;
     for (i = 0; i < 3; i++)
         for (j = 0; j <3; j++)
-            corpo[i][j] = 'A';
+            corpo[i][j] = ' ';
 }
 
 /*6. int verifica_ganhador(char jog): esta função retorna 1 se o jogador ganhou e zero caso
 contrário. O parâmetro jog conterá ‘X’ ou ‘O’.*/
 int verifica_ganhador(char jogada);
 
-//Formata a matriz
+//PRONTO Formata a matriz 
 void tabuleiro() {
     int i, j;
     for (i = 0; i < 3; i++)
