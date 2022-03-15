@@ -22,28 +22,39 @@ char corpo[3][3];
 
 void main() {
     char jogador1, jogador2, jogada;
-    int vez, proximo = 1, linha, coluna, i, ganhou;
+    int vez, proximo = 1, linha, coluna, i, valida, fim;
+
+        valida = -1;
+        i      = 0;
 
         inicializa_velha();
         menu();
         escolha_simb(&jogador1, &jogador2);
-        
         for (i = 0; i < 9; i++){
             system("clear");
             tabuleiro();
-            vez = proximo;
+            if (valida > 0) {
+                i--;
+                printf("\nJOGADA INVALIDA!\n\n");
+            } else vez = proximo;
             printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
-            if (proximo == 1) jogada = jogador1;
+            if (vez == 1) jogada = jogador1;
             else jogada = jogador2;
-            jogada_usuario(linha, coluna, jogada);
-            if (vez == 1) proximo = 2;
-            else proximo = 1;
+            valida = jogada_usuario(linha, coluna, jogada);
+            system("clear");     
+            if (vez == 1) {
+                proximo = 2;
+                vez = 1;
+            }
+            else {
+                proximo = 1;
+                vez = 2;
+            }    
             if (verifica_ganhador(jogada) == 1) {
-                system("clear");
                 tabuleiro();
                 printf("\nO Jogador %d ganhou! Parabens!\n", vez);
                 break;
-            } else if (i == 8) printf("\nDeu Velha!\n");
+            } else if (i == 8) printf("\nDeu Velha!\n"); 
         }
 }
 
@@ -53,6 +64,7 @@ parâmetro jog. A função retorna um dos seguintes valores:
 0 – se a jogada é válida
 1 – se a posição informada é inválida
 2 – se a posição informada já está preenchida*/
+//PRONTO
 int jogada_usuario(int linha, int coluna, char jogada) {
     scanf("%d %d", &linha, &coluna);
     if ((jogada == 'X') || (jogada == 'O')) 
@@ -89,7 +101,7 @@ int menu() {
 
 /*4. void escolha_simb(char *jog1, char *jog2 ): esta função define via entrada do usuário quem
 é o jogador ‘X’ e quem é o jogador ‘O’.*/
-//CHAMAR NA MAIN
+//PRONTO
 void escolha_simb(char *jogador1, char *jogador2) {
     int escolha;
     char simbolo[3] = "XO";
@@ -104,7 +116,8 @@ void escolha_simb(char *jogador1, char *jogador2) {
     system("clear");
 }  
 
-//PRONTO  5. void inicializa_velha( ): esta função inicializa a matriz do jogo da velha com vazio.
+//5. void inicializa_velha( ): esta função inicializa a matriz do jogo da velha com vazio.
+//PRONTO
 void inicializa_velha(){
     int i, j;
     for (i = 0; i < 3; i++)
@@ -114,6 +127,7 @@ void inicializa_velha(){
 
 /*6. int verifica_ganhador(char jog): esta função retorna 1 se o jogador ganhou e zero caso
 contrário. O parâmetro jog conterá ‘X’ ou ‘O’.*/
+//PRONTO
 int verifica_ganhador(char jogada) {
     int i, venceu;
 
@@ -136,7 +150,8 @@ int verifica_ganhador(char jogada) {
     return venceu;
 }
 
-//PRONTO Formata a matriz 
+//Formata a matriz
+//PRONTO 
 void tabuleiro() {
     int i, j;
     for (i = 0; i < 3; i++)
