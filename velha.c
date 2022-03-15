@@ -21,22 +21,29 @@ void tabuleiro();
 char corpo[3][3];
 
 void main() {
-    char jogador1, jogador2;
-    int vez, anterior = 1, linha, coluna, i;
+    char jogador1, jogador2, jogada;
+    int vez, proximo = 1, linha, coluna, i, ganhou;
 
         inicializa_velha();
         menu();
         escolha_simb(&jogador1, &jogador2);
         
         for (i = 0; i < 9; i++){
-            tabuleiro();
-            vez = anterior;
-            printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
-            if (vez == 1) jogada_usuario(linha, coluna, jogador1);
-            else jogada_usuario(linha, coluna, jogador2);
-            if (anterior == 1) anterior = 2;
-            else anterior = 1;
             system("clear");
+            tabuleiro();
+            vez = proximo;
+            printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
+            if (proximo == 1) jogada = jogador1;
+            else jogada = jogador2;
+            jogada_usuario(linha, coluna, jogada);
+            if (vez == 1) proximo = 2;
+            else proximo = 1;
+            if (verifica_ganhador(jogada) == 1) {
+                system("clear");
+                tabuleiro();
+                printf("\nO Jogador %d ganhou! Parabens!\n", vez);
+                break;
+            } else if (i == 8) printf("\nDeu Velha!\n");
         }
 }
 
@@ -108,7 +115,25 @@ void inicializa_velha(){
 /*6. int verifica_ganhador(char jog): esta função retorna 1 se o jogador ganhou e zero caso
 contrário. O parâmetro jog conterá ‘X’ ou ‘O’.*/
 int verifica_ganhador(char jogada) {
+    int i, venceu;
 
+    venceu = 0;
+
+    if ((corpo[0][0] == jogada) && (corpo[0][0] == corpo[1][1]) && 
+    (corpo[1][1] == corpo[2][2])) venceu = 1;
+
+    else if ((corpo[0][2] == jogada) && (corpo[0][2] == corpo[1][1]) && 
+    (corpo[1][1] == corpo[2][0])) venceu = 1;
+
+    for (i = 0; i < 3; i++) {
+        if ((corpo[i][0] == jogada) && (corpo[i][0] == corpo[i][1]) && 
+        (corpo[i][1] == corpo[i][2])) venceu = 1;
+
+        else if ((corpo[0][i] == jogada) && (corpo[0][i] == corpo[1][i]) && 
+        (corpo[1][i] == corpo[2][i])) venceu = 1;                
+    }
+
+    return venceu;
 }
 
 //PRONTO Formata a matriz 
