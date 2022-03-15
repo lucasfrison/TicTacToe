@@ -22,18 +22,22 @@ char corpo[3][3];
 
 void main() {
     char jogador1, jogador2;
-    int vez, anterior = 1, linha, coluna;
+    int vez, anterior = 1, linha, coluna, i;
 
-    vez = anterior;
-    inicializa_velha();
-    menu();
-    escolha_simb(&jogador1, &jogador2);
-    tabuleiro();
-    printf("Jogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
-    if (vez == 1) jogada_usuario(linha, coluna, jogador1);
-    else jogada_usuario(linha, coluna, jogador2);
-    if (anterior == 1) anterior == 2;
-    else anterior = 1;
+        inicializa_velha();
+        menu();
+        escolha_simb(&jogador1, &jogador2);
+        
+        for (i = 0; i < 9; i++){
+            tabuleiro();
+            vez = anterior;
+            printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
+            if (vez == 1) jogada_usuario(linha, coluna, jogador1);
+            else jogada_usuario(linha, coluna, jogador2);
+            if (anterior == 1) anterior = 2;
+            else anterior = 1;
+            system("clear");
+        }
 }
 
 /*1. int jogada_usuario(int lin, int col, char jog): esta função preenche a posição informada pelos
