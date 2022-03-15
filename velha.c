@@ -21,8 +21,19 @@ void tabuleiro();
 char corpo[3][3];
 
 void main() {
+    char jogador1, jogador2;
+    int vez, anterior = 1, linha, coluna;
+
+    vez = anterior;
     inicializa_velha();
+    menu();
+    escolha_simb(&jogador1, &jogador2);
     tabuleiro();
+    printf("Jogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
+    if (vez == 1) jogada_usuario(linha, coluna, jogador1);
+    else jogada_usuario(linha, coluna, jogador2);
+    if (anterior == 1) anterior == 2;
+    else anterior = 1;
 }
 
 /*1. int jogada_usuario(int lin, int col, char jog): esta função preenche a posição informada pelos
@@ -32,10 +43,14 @@ parâmetro jog. A função retorna um dos seguintes valores:
 1 – se a posição informada é inválida
 2 – se a posição informada já está preenchida*/
 int jogada_usuario(int linha, int coluna, char jogada) {
+    scanf("%d %d", &linha, &coluna);
     if ((jogada == 'X') || (jogada == 'O')) 
         if ((linha <= 3)&&(coluna <= 3))
-            if (corpo[linha-1][coluna-1] == ' ')
+            if (corpo[linha-1][coluna-1] == ' ') {
                 corpo[linha-1][coluna-1] = jogada;
+                return 0;
+            } else return 2;
+        else return 1;       
 }
 
 /*2. void jogada_computador(char jog, int nivel): esta função realiza a jogada do computador. O
@@ -58,17 +73,6 @@ int menu() {
         scanf("%d", &escolha);
         system("clear");
     }    
-    switch (escolha)
-    {
-    case 1:
-        
-        
-        break;
-    
-    case 2:  //PRONTO            
-        
-        break;
-    }
     return escolha;
 }
 
@@ -86,6 +90,7 @@ void escolha_simb(char *jogador1, char *jogador2) {
     if (*jogador1 == simbolo[0])
         *jogador2 = simbolo[1];
     else *jogador2 = simbolo[0]; 
+    system("clear");
 }  
 
 //PRONTO  5. void inicializa_velha( ): esta função inicializa a matriz do jogo da velha com vazio.
