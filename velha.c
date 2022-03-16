@@ -23,7 +23,7 @@ char corpo[3][3];
 
 void main() {
     char jogador1, jogador2, jogada;
-    int vez = 1,  atual = 0, linha, coluna, i = 0, valida = 0, fim = 0;
+    int vez = 1,  atual = 0, linha, coluna, valida = 0, fim = 0;
 
     inicializa_velha();
     menu();
