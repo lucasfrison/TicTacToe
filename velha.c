@@ -28,7 +28,7 @@ void main() {
     inicializa_velha();
     menu();
     escolha_simb(&jogador1, &jogador2);
-    for (i = 0; i < 100; i++){  
+    for (;;){  
         system("clear");
         tabuleiro();  
         printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
