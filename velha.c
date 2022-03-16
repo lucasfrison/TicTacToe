@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <unistd.h>
 
 int jogada_usuario(int linha, int coluna, char jogada);
 
@@ -22,40 +23,46 @@ char corpo[3][3];
 
 void main() {
     char jogador1, jogador2, jogada;
-    int vez, proximo = 1, linha, coluna, i, valida, fim;
+    int vez = 1,  atual = 0, linha, coluna, i = 0, valida = 0, fim = 0;
 
-        valida = -1;
-        i      = 0;
-
-        inicializa_velha();
-        menu();
-        escolha_simb(&jogador1, &jogador2);
-        for (i = 0; i < 9; i++){
-            system("clear");
-            tabuleiro();
-            if (valida > 0) {
-                i--;
-                printf("\nJOGADA INVALIDA!\n\n");
-            } else vez = proximo;
-            printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
-            if (vez == 1) jogada = jogador1;
-            else jogada = jogador2;
-            valida = jogada_usuario(linha, coluna, jogada);
-            system("clear");     
+    inicializa_velha();
+    menu();
+    escolha_simb(&jogador1, &jogador2);
+    for (i = 0; i < 100; i++){  
+        system("clear");
+        tabuleiro();  
+        printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
+        if (vez == 1) jogada = jogador1;
+        else jogada = jogador2;
+        valida = jogada_usuario(linha, coluna, jogada);
+        system("clear"); 
+        tabuleiro();  
+        if (valida > 0) 
+        {
+            printf("\nJOGADA INVALIDA!\n");
+            sleep(1);
+        }    
+        else {
+            fim++;
             if (vez == 1) {
-                proximo = 2;
-                vez = 1;
+                vez = 2;
+                atual = 1;
             }
             else {
-                proximo = 1;
-                vez = 2;
+                vez = 1;
+                atual = 2;
             }    
-            if (verifica_ganhador(jogada) == 1) {
-                tabuleiro();
-                printf("\nO Jogador %d ganhou! Parabens!\n", vez);
-                break;
-            } else if (i == 8) printf("\nDeu Velha!\n"); 
-        }
+        }        
+        if (verifica_ganhador(jogada) == 1) {
+            system("clear");
+            tabuleiro();
+            printf("\nO Jogador %d ganhou! Parabens!\n", atual);
+            break;
+        } else if (fim == 9) {
+            printf("\nDeu Velha!\n");
+            break;
+        }     
+    }
 }
 
 /*1. int jogada_usuario(int lin, int col, char jog): esta função preenche a posição informada pelos
@@ -67,13 +74,12 @@ parâmetro jog. A função retorna um dos seguintes valores:
 //PRONTO
 int jogada_usuario(int linha, int coluna, char jogada) {
     scanf("%d %d", &linha, &coluna);
-    if ((jogada == 'X') || (jogada == 'O')) 
-        if ((linha <= 3)&&(coluna <= 3))
-            if (corpo[linha-1][coluna-1] == ' ') {
+    if ((linha <= 3)&&(coluna <= 3))
+        if (corpo[linha-1][coluna-1] == ' ') {
                 corpo[linha-1][coluna-1] = jogada;
                 return 0;
-            } else return 2;
-        else return 1;       
+        } else return 2;
+    else return 1;       
 }
 
 /*2. void jogada_computador(char jog, int nivel): esta função realiza a jogada do computador. O
