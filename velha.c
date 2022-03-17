@@ -27,13 +27,12 @@ char corpo[3][3];
 
 void main() {
     char jogador1, jogador2, jogada;
-    int vez,  atual, linha, coluna, valida, fim;
+    int vez = 1,  atual = 0, linha, coluna, valida, fim, vit1, vit2;
 
     do {
-        atual = 0;
         valida = 0;
         fim = 0;
-        vez = 1;
+        vez = atual == 1 ? 2 : 1;
         inicializa_velha();
         system("clear");
         menu();
@@ -67,6 +66,7 @@ void main() {
                 system("clear");
                 tabuleiro();
                 printf("\nO Jogador %d ganhou! Parabens!\n", atual);
+                
                 break;
             } else if (fim == 9) {
                 printf("\nDeu Velha!\n");
