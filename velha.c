@@ -22,6 +22,12 @@ int scanint();
 
 char confirmar();
 
+void basico();
+
+void intermediario();
+
+void avancado();
+
 //corpo do jogo
 char corpo[3][3];
 
@@ -206,4 +212,19 @@ char confirmar() {
         confirm = toupper(confirm);
         system("clear");
     } while ((confirm != 'S') && (confirm != 'N'));
+}
+
+//Dificuldade facil do cpu
+void basico() {
+
+}
+
+//Dificuldade media do cpu
+void intermediario() {
+
+}
+
+//Dificuldade avancada do cpu
+void avancado() {
+    
 }
