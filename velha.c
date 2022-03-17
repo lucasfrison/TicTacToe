@@ -199,7 +199,7 @@ char confirmar() {
     char confirm;
 
     do {
-        printf("\n\n%s\n", mensagem);
+        printf("\n%s\n", mensagem);
         scanf(" %c", &confirm);
         confirm = toupper(confirm);
         system("clear");
