@@ -28,6 +28,7 @@ void main() {
     int vez = 1,  atual = 0, linha, coluna, valida = 0, fim = 0;
 
     inicializa_velha();
+    system("clear");
     menu();
     escolha_simb(&jogador1, &jogador2);
     for (;;){  
