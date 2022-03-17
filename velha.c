@@ -20,52 +20,60 @@ void tabuleiro();
 
 int scanint();
 
+char confirmar();
+
 //corpo do jogo
 char corpo[3][3];
 
 void main() {
     char jogador1, jogador2, jogada;
-    int vez = 1,  atual = 0, linha, coluna, valida = 0, fim = 0;
+    int vez,  atual, linha, coluna, valida, fim;
 
-    inicializa_velha();
-    system("clear");
-    menu();
-    escolha_simb(&jogador1, &jogador2);
-    for (;;){  
+    do {
+        atual = 0;
+        valida = 0;
+        fim = 0;
+        vez = 1;
+        inicializa_velha();
         system("clear");
-        tabuleiro();  
-        printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
-        if (vez == 1) jogada = jogador1;
-        else jogada = jogador2;
-        valida = jogada_usuario(linha, coluna, jogada);
-        system("clear"); 
-        tabuleiro();  
-        if (valida > 0) 
-        {
-            printf("\nJOGADA INVALIDA!\n");
-            sleep(1);
-        }    
-        else {
-            fim++;
-            if (vez == 1) {
-                vez = 2;
-                atual = 1;
-            }
-            else {
-                vez = 1;
-                atual = 2;
-            }    
-        }        
-        if (verifica_ganhador(jogada) == 1) {
+        menu();
+        escolha_simb(&jogador1, &jogador2);
+        for (;;){  
             system("clear");
-            tabuleiro();
-            printf("\nO Jogador %d ganhou! Parabens!\n", atual);
-            break;
-        } else if (fim == 9) {
-            printf("\nDeu Velha!\n");
-            break;
-        }     
-    }
+            tabuleiro();  
+            printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
+            if (vez == 1) jogada = jogador1;
+            else jogada = jogador2;
+            valida = jogada_usuario(linha, coluna, jogada);
+            system("clear"); 
+            tabuleiro();  
+            if (valida > 0) 
+            {
+                printf("\nJOGADA INVALIDA!\n");
+                sleep(1);
+            }    
+            else {
+                fim++;
+                if (vez == 1) {
+                    vez = 2;
+                    atual = 1;
+                }
+                else {
+                    vez = 1;
+                    atual = 2;
+                }    
+            }        
+            if (verifica_ganhador(jogada) == 1) {
+                system("clear");
+                tabuleiro();
+                printf("\nO Jogador %d ganhou! Parabens!\n", atual);
+                break;
+            } else if (fim == 9) {
+                printf("\nDeu Velha!\n");
+                break;
+            }     
+        }
+    } while (confirmar() != 'N');
 }
 
 /*1. int jogada_usuario(int lin, int col, char jog): esta função preenche a posição informada pelos
@@ -183,4 +191,17 @@ int scanint() {
     
     scanf(" %c", &str);
     return atoi(&str);
+}
+
+//Menu de confirmacao
+char confirmar() {
+    const char mensagem[] = "Deseja jogar outra partida? (S/N)";
+    char confirm;
+
+    do {
+        printf("\n\n%s\n", mensagem);
+        scanf(" %c", &confirm);
+        confirm = toupper(confirm);
+        system("clear");
+    } while ((confirm != 'S') && (confirm != 'N'));
 }
