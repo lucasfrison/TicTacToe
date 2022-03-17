@@ -115,17 +115,19 @@ int menu() {
 é o jogador ‘X’ e quem é o jogador ‘O’.*/
 //PRONTO
 void escolha_simb(char *jogador1, char *jogador2) {
-    int escolha;
+    int escolha = -1;
     char simbolo[3] = "XO";
-    printf("Jogador 1: Escolha seu simbolo:\n");
-    printf("1. X.    2. O\n");
-    escolha = scanint();
-    escolha -= 1;
-    *jogador1 = simbolo[escolha];
-    if (*jogador1 == simbolo[0])
-        *jogador2 = simbolo[1];
-    else *jogador2 = simbolo[0]; 
-    system("clear");
+    while ((escolha != 0) && (escolha != 1)) {
+        printf("Jogador 1: Escolha seu simbolo:\n");
+        printf("1. X.    2. O\n");
+        escolha = scanint();
+        escolha--;
+        *jogador1 = simbolo[escolha];
+        if (*jogador1 == simbolo[0])
+            *jogador2 = simbolo[1];
+        else *jogador2 = simbolo[0]; 
+        system("clear");
+    }
 }  
 
 //5. void inicializa_velha( ): esta função inicializa a matriz do jogo da velha com vazio.
