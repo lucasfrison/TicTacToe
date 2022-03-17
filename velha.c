@@ -18,6 +18,8 @@ int verifica_ganhador(char jogada);
 
 void tabuleiro();
 
+int scanint();
+
 //corpo do jogo
 char corpo[3][3];
 
@@ -73,7 +75,10 @@ parâmetro jog. A função retorna um dos seguintes valores:
 2 – se a posição informada já está preenchida*/
 //PRONTO
 int jogada_usuario(int linha, int coluna, char jogada) {
-    scanf("%d %d", &linha, &coluna);
+    char str;
+    
+    linha  = scanint();
+    coluna = scanint();
     if ((linha <= 3)&&(coluna <= 3))
         if (corpo[linha-1][coluna-1] == ' ') {
                 corpo[linha-1][coluna-1] = jogada;
@@ -93,13 +98,14 @@ void jogada_computador(char jogada, int nivel);
 /*3. int menu( ): esta função retorna 1 se o usuário quer jogar contra o computador ou 2 caso o
 usuário queira jogar contra outro usuário. Caso o usuário queira jogar contra o computador ele
 também deve escolher o nível da jogada do computador: básico, intermediário ou avançado.*/
+//PRONTO
 int menu() {
     int escolha = 0;
     while ((escolha > 2)||(escolha < 1)) {
         printf("Bem vindo(a)! Escolha o modo de jogo.\n");
         printf("1. Jogar contra o computador.\n");
         printf("2. Jogar contra outro jogador.\n");
-        scanf("%d", &escolha);
+        escolha = scanint();
         system("clear");
     }    
     return escolha;
@@ -113,7 +119,7 @@ void escolha_simb(char *jogador1, char *jogador2) {
     char simbolo[3] = "XO";
     printf("Jogador 1: Escolha seu simbolo:\n");
     printf("1. X.    2. O\n");
-    scanf("%d", &escolha);
+    escolha = scanint();
     escolha -= 1;
     *jogador1 = simbolo[escolha];
     if (*jogador1 == simbolo[0])
@@ -166,4 +172,12 @@ void tabuleiro() {
                 if (i != 2) printf("  %c\n-----------------\n", corpo[i][j]);
                 else printf("  %c\n", corpo[i][j]);
             else printf("  %c  |", corpo[i][j]);    
+}
+
+//Le um char e retorna o valor inteiro
+int scanint() {
+    char str;
+    
+    scanf(" %c", &str);
+    return atoi(&str);
 }
