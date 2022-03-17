@@ -188,9 +188,11 @@ void tabuleiro() {
 //Le um char e retorna o valor inteiro
 int scanint() {
     char str;
+    int val = 0;
     
     scanf(" %c", &str);
-    return atoi(&str);
+    val = atoi(&str);
+    return val; 
 }
 
 //Menu de confirmacao
