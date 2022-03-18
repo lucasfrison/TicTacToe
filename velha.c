@@ -256,7 +256,7 @@ void avancado(char jogada) {
 }
 
 //imprime cabecalho
-void inicio_jogada(char mensagem[10], char mensagem2[10], int vit, int vit2) {
+void inicio_jogada(char mensagem[11], char mensagem2[11], int vit, int vit2) {
     system("clear");
     printf("Vitorias %s: %d\n", mensagem, vit);
     printf("Vitorias %s: %d\n\n", mensagem2, vit2);
@@ -285,11 +285,15 @@ void valida_jogada(int valida, int *vez, int *atual, int *fim) {
 //mostra o resultado
 int resultado(char jogada, int *vit1, int *vit2, int atual, int modo, int fim) {
     int verifica;
+    char mensagem[11];
+
     verifica = verifica_ganhador(jogada);
     if (verifica == 1) {
         *vit1 = atual == 1 ? ++(*vit1) : *vit1;
         *vit2 = atual == 2 ? ++(*vit2) : *vit2;
-        inicio_jogada("Jogador 1", "Jogador 2", *vit1, *vit2);
+        if (modo == 1) strcpy(mensagem, "Computador");
+        else strcpy(mensagem, "Jogador 2");
+        inicio_jogada("Jogador 1", mensagem, *vit1, *vit2);
         if ((atual == 2) && (modo == 1))
             printf("\nO Computador ganhou! Mais sorte na proxima.\n");
         else printf("\nO Jogador %d ganhou! Parabens!\n", atual);
