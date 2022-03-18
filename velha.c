@@ -54,7 +54,7 @@ void main() {
         switch (op) {
             case 1:
                 system("clear");
-                printf("Escolha o nivel de dificuldade do PC:\n");
+                printf("Escolha o nivel de dificuldade do PC:\n\n");
                 printf("1. Basico.\n");
                 printf("2. Intermediario.\n");
                 printf("3. Avancado.\n");
@@ -142,7 +142,7 @@ também deve escolher o nível da jogada do computador: básico, intermediário 
 int menu() {
     int escolha = 0;
     while ((escolha > 2)||(escolha < 1)) {
-        printf("Bem vindo(a)! Escolha o modo de jogo.\n");
+        printf("Bem vindo(a)! Escolha o modo de jogo.\n\n");
         printf("1. Jogar contra o computador.\n");
         printf("2. Jogar contra outro jogador.\n");
         escolha = scanint();
@@ -158,7 +158,7 @@ void escolha_simb(char *jogador1, char *jogador2) {
     int escolha = -1;
     char simbolo[3] = "XO";
     while ((escolha != 0) && (escolha != 1)) {
-        printf("Escolha os simbolos: J1 ficara com o escolhido, J2 ou PC ficara com o outro:\n");
+        printf("Escolha os simbolos: J1 ficara com o escolhido, J2 ou PC ficara com o outro:\n\n");
         printf("1. X.    2. O\n");
         escolha = scanint();
         escolha--;
