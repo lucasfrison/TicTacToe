@@ -44,40 +44,43 @@ void main() {
         op = menu();
         escolha_simb(&jogador1, &jogador2);
         switch (op) {
+            case 1:
+
+                break;
             case 2:
                 for (;;) {  
-                system("clear");
-                tabuleiro();  
-                printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
-                if (vez == 1) jogada = jogador1;
-                else jogada = jogador2;
-                valida = jogada_usuario(linha, coluna, jogada);
-                system("clear"); 
-                tabuleiro();  
-                if (valida > 0) 
-                {
-                    printf("\nJOGADA INVALIDA!\n");
-                    sleep(1);
-                }    
-                else {
-                    fim++;
-                    if (vez == 1) {
-                        vez = 2;
-                        atual = 1;
-                    }
-                    else {
-                        vez = 1;
-                        atual = 2;
-                    }    
-                }        
-                if (verifica_ganhador(jogada) == 1) {
                     system("clear");
-                    tabuleiro();
-                    printf("\nO Jogador %d ganhou! Parabens!\n", atual);
-                    break;
-                } else if (fim == 9) {
-                    printf("\nDeu Velha!\n");
-                    break;
+                    tabuleiro();  
+                    printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
+                    if (vez == 1) jogada = jogador1;
+                    else jogada = jogador2;
+                    valida = jogada_usuario(linha, coluna, jogada);
+                    system("clear"); 
+                    tabuleiro();  
+                    if (valida > 0) 
+                    {
+                        printf("\nJOGADA INVALIDA!\n");
+                        sleep(1);
+                    }    
+                    else {
+                        fim++;
+                        if (vez == 1) {
+                            vez = 2;
+                            atual = 1;
+                        }
+                        else {
+                            vez = 1;
+                            atual = 2;
+                        }    
+                    }        
+                    if (verifica_ganhador(jogada) == 1) {
+                        system("clear");
+                        tabuleiro();
+                        printf("\nO Jogador %d ganhou! Parabens!\n", atual);
+                        break;
+                    } else if (fim == 9) {
+                        printf("\nDeu Velha!\n");
+                        break;
                 }     
             }
         }    
