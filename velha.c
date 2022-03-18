@@ -33,7 +33,9 @@ char corpo[3][3];
 
 void main() {
     char jogador1, jogador2, jogada;
-    int vez = 1,  atual = 0, linha, coluna, valida, fim, vit1, vit2, op, nivel;
+    int 
+        vez = 1,  atual = 0, linha, coluna, valida, fim, vit1 = 0, 
+        vit2 = 0, vitcpu = 0, vit11 = 0, op, nivel;
 
     do {
         valida = 0;
@@ -53,6 +55,8 @@ void main() {
                 nivel = scanint();
                 for (;;) {  
                     system("clear");
+                    printf("Vitorias Jogador 1 : %d\n", vit11);
+                    printf("Vitorias Computador: %d\n\n", vitcpu);
                     tabuleiro();  
                     printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
                     if (vez == 1) { 
@@ -89,6 +93,8 @@ void main() {
                         system("clear");
                         tabuleiro();
                         printf("\nO Jogador %d ganhou! Parabens!\n", atual);
+                        vit11 = atual == 1 ? ++vit11 : vit11;
+                        vitcpu = atual == 2 ? ++vitcpu : vitcpu;
                         break;
                     } else if (fim == 9) {
                         printf("\nDeu Velha!\n");
@@ -99,6 +105,8 @@ void main() {
             case 2:
                 for (;;) {  
                     system("clear");
+                    printf("Vitorias Jogador 1: %d\n", vit1);
+                    printf("Vitorias Jogador 2: %d\n\n", vit2);
                     tabuleiro();  
                     printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
                     if (vez == 1) jogada = jogador1;
@@ -126,6 +134,8 @@ void main() {
                         system("clear");
                         tabuleiro();
                         printf("\nO Jogador %d ganhou! Parabens!\n", atual);
+                        vit1 = atual == 1 ? ++vit1 : vit1;
+                        vit2 = atual == 2 ? ++vit2 : vit2;
                         break;
                     } else if (fim == 9) {
                         printf("\nDeu Velha!\n");
@@ -199,7 +209,7 @@ void escolha_simb(char *jogador1, char *jogador2) {
     int escolha = -1;
     char simbolo[3] = "XO";
     while ((escolha != 0) && (escolha != 1)) {
-        printf("Jogador 1: Escolha seu simbolo:\n");
+        printf("Escolha o simbolo para o J1, J2 ficara com o outro:\n");
         printf("1. X.    2. O\n");
         escolha = scanint();
         escolha--;
