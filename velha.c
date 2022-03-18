@@ -28,6 +28,12 @@ void intermediario(char jogada);
 
 void avancado(char jogada);
 
+void inicio_jogada(char mensagem[10], char mensagem2[10], int vit, int vit2);
+
+void valida_jogada(int valida, int *vez, int *atual, int *fim);
+
+int resultado(char jogada, int *vit1, int *vit2, int atual, int modo, int fim); 
+
 //corpo do jogo
 char corpo[3][3];
 
@@ -35,7 +41,7 @@ void main() {
     char jogador1, jogador2, jogada;
     int 
         vez = 1,  atual = 0, linha, coluna, valida, fim, vit1 = 0, 
-        vit2 = 0, vitcpu = 0, vit11 = 0, op, nivel;
+        vit2 = 0, vitcpu = 0, vit11 = 0, op, nivel, result;
 
     do {
         valida = 0;
@@ -48,100 +54,43 @@ void main() {
         switch (op) {
             case 1:
                 system("clear");
-                printf("Escolha o nivel de dificuldade do PC:\n\n");
+                printf("Escolha o nivel de dificuldade do PC:\n");
                 printf("1. Basico.\n");
                 printf("2. Intermediario.\n");
                 printf("3. Avancado.\n");
                 nivel = scanint();
                 for (;;) {  
-                    system("clear");
-                    printf("Vitorias Jogador 1 : %d\n", vit11);
-                    printf("Vitorias Computador: %d\n\n", vitcpu);
-                    tabuleiro();  
-                    printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
+                    inicio_jogada("Jogador 1", "Computador", vit11, vitcpu);  
                     if (vez == 1) { 
+                        printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
                         jogada = jogador1;
                         valida = jogada_usuario(linha, coluna, jogada);
                     }    
                     else {
-                        system("clear");
-                        tabuleiro();
+                        inicio_jogada("Jogador 1", "Computador", vit11, vitcpu);
                         jogada = jogador2;
                         printf("\nComputador jogando...\n");
                         sleep(1);
                         jogada_computador(jogada, nivel);
                         valida = 0;
                     }    
-                    system("clear"); 
-                    tabuleiro();  
-                    if (valida > 0) {
-                        printf("\nJOGADA INVALIDA!\n");
-                        sleep(1);
-                    }    
-                    else {
-                        fim++;
-                        if (vez == 1) {
-                            vez = 2;
-                            atual = 1;
-                        }
-                        else {
-                            vez = 1;
-                            atual = 2;
-                        }    
-                    }        
-                    if (verifica_ganhador(jogada) == 1) {
-                        system("clear");
-                        tabuleiro();
-                        printf("\nO Jogador %d ganhou! Parabens!\n", atual);
-                        vit11 = atual == 1 ? ++vit11 : vit11;
-                        vitcpu = atual == 2 ? ++vitcpu : vitcpu;
-                        break;
-                    } else if (fim == 9) {
-                        printf("\nDeu Velha!\n");
-                        break;
-                    }    
+                    inicio_jogada("Jogador 1", "Computador", vit11, vitcpu); 
+                    valida_jogada(valida, &vez, &atual, &fim);       
+                    result = resultado(jogada, &vit11, &vitcpu, atual, 1, fim);
+                    if ((result == 1) || (result == 2)) break;    
                 }     
                 break;
             case 2:
                 for (;;) {  
-                    system("clear");
-                    printf("Vitorias Jogador 1: %d\n", vit1);
-                    printf("Vitorias Jogador 2: %d\n\n", vit2);
-                    tabuleiro();  
+                    inicio_jogada("Jogador 1", "Jogador 2", vit1, vit2);  
                     printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
                     if (vez == 1) jogada = jogador1;
                     else jogada = jogador2;
                     valida = jogada_usuario(linha, coluna, jogada);
-                    system("clear"); 
-                    tabuleiro();  
-                    if (valida > 0) 
-                    {
-                        printf("\nJOGADA INVALIDA!\n");
-                        sleep(1);
-                    }    
-                    else {
-                        fim++;
-                        if (vez == 1) {
-                            vez = 2;
-                            atual = 1;
-                        }
-                        else {
-                            vez = 1;
-                            atual = 2;
-                        }    
-                    }        
-                    if (verifica_ganhador(jogada) == 1) {
-                        system("clear");
-                        tabuleiro();
-                        printf("\nO Jogador %d ganhou! Parabens!\n", atual);
-                        vit1 = atual == 1 ? ++vit1 : vit1;
-                        vit2 = atual == 2 ? ++vit2 : vit2;
-                        break;
-                    } else if (fim == 9) {
-                        printf("\nDeu Velha!\n");
-                        break;
-                    }
-
+                    inicio_jogada("Jogador 1", "Jogador 2", vit1, vit2); 
+                    valida_jogada(valida, &vez, &atual, &fim);
+                    result = resultado(jogada, &vit1, &vit2, atual, 2, fim);
+                    if ((result == 1) || (result == 2)) break;
                 }             
         }    
     } while (confirmar() != 'N');
@@ -294,38 +243,9 @@ char confirmar() {
 void basico(char jogada) {
     int i, j, jogou = 0;
 
-    while (jogou == 0)
-        for (j = 0; j < 3; j++) { 
-            if (j == 0) {
-                if ((corpo[i][j] == ' ') && (corpo[i][j+1] != ' ')) {
-                    corpo[i][j] = jogada;    
-                    jogou++;
-                    break;
-                }    
-            }   
-            else if (j == 1) {
-                if ((corpo[i][j] == ' ') && (corpo[i][j+1] != ' ')) {
-                    corpo[i][j] = jogada;    
-                    jogou++;
-                    break;
-                }
-                else if ((corpo[i][j] == ' ') && (corpo[i][j-1] != ' ')) {
-                    corpo[i][j] = jogada;    
-                    jogou++;
-                    break;
-                }  
-            }
-            else {
-                if ((corpo[i][j] == ' ') && (corpo[i][j-1] != ' ')) {
-                    corpo[i][j] = jogada;    
-                    jogou++;
-                    break;
-                }  
-            }    
-        }    
-}
-
-//Dificuldade media do cpu
+}        
+         
+//Dificuldade intermediaria do cpu
 void intermediario(char jogada) {
     int i;
 }
@@ -333,4 +253,49 @@ void intermediario(char jogada) {
 //Dificuldade avancada do cpu
 void avancado(char jogada) {
     int i;
+}
+
+//imprime cabecalho
+void inicio_jogada(char mensagem[10], char mensagem2[10], int vit, int vit2) {
+    system("clear");
+    printf("Vitorias %s: %d\n", mensagem, vit);
+    printf("Vitorias %s: %d\n\n", mensagem2, vit2);
+    tabuleiro();
+}
+
+//verifica a validade da jogada
+void valida_jogada(int valida, int *vez, int *atual, int *fim) {
+    if (valida > 0) {
+        printf("\nJOGADA INVALIDA!\n");
+        sleep(1);
+    }    
+    else {
+        (*fim)++;
+        if (*vez == 1) {
+            *vez = 2;
+            *atual = 1;
+        }
+        else {
+            *vez = 1;
+            *atual = 2;
+        }    
+    }     
+}
+
+//mostra o resultado
+int resultado(char jogada, int *vit1, int *vit2, int atual, int modo, int fim) {
+    int verifica;
+    verifica = verifica_ganhador(jogada);
+    if (verifica == 1) {
+        *vit1 = atual == 1 ? ++(*vit1) : *vit1;
+        *vit2 = atual == 2 ? ++(*vit2) : *vit2;
+        inicio_jogada("Jogador 1", "Jogador 2", *vit1, *vit2);
+        if ((atual == 2) && (modo == 1))
+            printf("\nO Computador ganhou! Mais sorte na proxima.\n");
+        else printf("\nO Jogador %d ganhou! Parabens!\n", atual);
+    } else if (fim == 9) {
+        verifica = 2;
+        printf("\nDeu Velha!\n");
+    }    
+    return verifica;
 }
