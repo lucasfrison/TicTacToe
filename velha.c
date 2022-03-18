@@ -209,7 +209,7 @@ void escolha_simb(char *jogador1, char *jogador2) {
     int escolha = -1;
     char simbolo[3] = "XO";
     while ((escolha != 0) && (escolha != 1)) {
-        printf("Escolha os simbolos: J1 ficara com o escolhido, J2 ficara com o outro:\n");
+        printf("Escolha os simbolos: J1 ficara com o escolhido, J2 ou PC ficara com o outro:\n");
         printf("1. X.    2. O\n");
         escolha = scanint();
         escolha--;
