@@ -241,7 +241,13 @@ char confirmar() {
 
 //Dificuldade facil do cpu
 void basico(char jogada) {
-    int i, j, jogou = 0;
+    int i, j, jogou;
+
+    do {
+        i = rand() % 3;
+        j = rand() % 3;
+    } while (corpo[i][j] != ' ');
+    corpo[i][j] = jogada;
 
 }        
          
