@@ -67,7 +67,6 @@ void main() {
                         valida = jogada_usuario(linha, coluna, jogada);
                     }    
                     else {
-                        inicio_jogada("Jogador 1", "Computador", vit11, vitcpu);
                         jogada = jogador2;
                         printf("\nComputador jogando...\n");
                         sleep(1);
