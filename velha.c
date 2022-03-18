@@ -271,7 +271,8 @@ void inicio_jogada(char mensagem[11], char mensagem2[11], int vit, int vit2) {
 //verifica a validade da jogada
 void valida_jogada(int valida, int *vez, int *atual, int *fim) {
     if (valida > 0) {
-        printf("\nJOGADA INVALIDA!\n");
+        if (valida == 2) printf("\nPOSICAO JA PREENCHIDA!\n");
+        else printf("\nJOGADA INVALIDA!\n");
         sleep(1);
     }    
     else {
