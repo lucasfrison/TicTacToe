@@ -33,7 +33,7 @@ char corpo[3][3];
 
 void main() {
     char jogador1, jogador2, jogada;
-    int vez = 1,  atual = 0, linha, coluna, valida, fim, vit1, vit2, op;
+    int vez = 1,  atual = 0, linha, coluna, valida, fim, vit1, vit2, op, nivel;
 
     do {
         valida = 0;
@@ -45,7 +45,56 @@ void main() {
         escolha_simb(&jogador1, &jogador2);
         switch (op) {
             case 1:
-
+                system("clear");
+                printf("Escolha o nivel de dificuldade do PC:\n\n");
+                printf("1. Basico.\n");
+                printf("2. Intermediario.\n");
+                printf("3. Avancado.\n");
+                nivel = scanint();
+                for (;;) {  
+                    system("clear");
+                    tabuleiro();  
+                    printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
+                    if (vez == 1) { 
+                        jogada = jogador1;
+                        valida = jogada_usuario(linha, coluna, jogada);
+                    }    
+                    else {
+                        system("clear");
+                        tabuleiro();
+                        jogada = jogador2;
+                        printf("\nComputador jogando...\n");
+                        sleep(1);
+                        jogada_computador(jogada, nivel);
+                        valida = 0;
+                    }    
+                    system("clear"); 
+                    tabuleiro();  
+                    if (valida > 0) {
+                        printf("\nJOGADA INVALIDA!\n");
+                        sleep(1);
+                    }    
+                    else {
+                        fim++;
+                        if (vez == 1) {
+                            vez = 2;
+                            atual = 1;
+                        }
+                        else {
+                            vez = 1;
+                            atual = 2;
+                        }    
+                    }        
+                    if (verifica_ganhador(jogada) == 1) {
+                        system("clear");
+                        tabuleiro();
+                        printf("\nO Jogador %d ganhou! Parabens!\n", atual);
+                        break;
+                    } else if (fim == 9) {
+                        printf("\nDeu Velha!\n");
+                        break;
+                    }    
+                }     
                 break;
             case 2:
                 for (;;) {  
@@ -81,8 +130,9 @@ void main() {
                     } else if (fim == 9) {
                         printf("\nDeu Velha!\n");
                         break;
-                }     
-            }
+                    }
+
+                }             
         }    
     } while (confirmar() != 'N');
 }       
@@ -94,6 +144,7 @@ parâmetro jog. A função retorna um dos seguintes valores:
 1 – se a posição informada é inválida
 2 – se a posição informada já está preenchida*/
 //PRONTO
+
 int jogada_usuario(int linha, int coluna, char jogada) {
     char str;
     
