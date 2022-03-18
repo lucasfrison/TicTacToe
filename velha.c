@@ -241,7 +241,7 @@ char confirmar() {
 
 //Dificuldade facil do cpu
 void basico(char jogada) {
-    int i, j, jogou;
+    int i, j;
 
     do {
         i = rand() % 3;
