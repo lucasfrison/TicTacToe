@@ -22,18 +22,18 @@ int scanint();
 
 char confirmar();
 
-void basico();
+void basico(char jogada);
 
-void intermediario();
+void intermediario(char jogada);
 
-void avancado();
+void avancado(char jogada);
 
 //corpo do jogo
 char corpo[3][3];
 
 void main() {
     char jogador1, jogador2, jogada;
-    int vez = 1,  atual = 0, linha, coluna, valida, fim, vit1, vit2;
+    int vez = 1,  atual = 0, linha, coluna, valida, fim, vit1, vit2, op;
 
     do {
         valida = 0;
@@ -41,47 +41,49 @@ void main() {
         vez = atual == 1 ? 2 : 1;
         inicializa_velha();
         system("clear");
-        menu();
+        op = menu();
         escolha_simb(&jogador1, &jogador2);
-        for (;;){  
-            system("clear");
-            tabuleiro();  
-            printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
-            if (vez == 1) jogada = jogador1;
-            else jogada = jogador2;
-            valida = jogada_usuario(linha, coluna, jogada);
-            system("clear"); 
-            tabuleiro();  
-            if (valida > 0) 
-            {
-                printf("\nJOGADA INVALIDA!\n");
-                sleep(1);
-            }    
-            else {
-                fim++;
-                if (vez == 1) {
-                    vez = 2;
-                    atual = 1;
-                }
-                else {
-                    vez = 1;
-                    atual = 2;
-                }    
-            }        
-            if (verifica_ganhador(jogada) == 1) {
+        switch (op) {
+            case 2:
+                for (;;) {  
                 system("clear");
-                tabuleiro();
-                printf("\nO Jogador %d ganhou! Parabens!\n", atual);
-                
-                break;
-            } else if (fim == 9) {
-                printf("\nDeu Velha!\n");
-                break;
-            }     
-        }
+                tabuleiro();  
+                printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
+                if (vez == 1) jogada = jogador1;
+                else jogada = jogador2;
+                valida = jogada_usuario(linha, coluna, jogada);
+                system("clear"); 
+                tabuleiro();  
+                if (valida > 0) 
+                {
+                    printf("\nJOGADA INVALIDA!\n");
+                    sleep(1);
+                }    
+                else {
+                    fim++;
+                    if (vez == 1) {
+                        vez = 2;
+                        atual = 1;
+                    }
+                    else {
+                        vez = 1;
+                        atual = 2;
+                    }    
+                }        
+                if (verifica_ganhador(jogada) == 1) {
+                    system("clear");
+                    tabuleiro();
+                    printf("\nO Jogador %d ganhou! Parabens!\n", atual);
+                    break;
+                } else if (fim == 9) {
+                    printf("\nDeu Velha!\n");
+                    break;
+                }     
+            }
+        }    
     } while (confirmar() != 'N');
-}
-
+}       
+           
 /*1. int jogada_usuario(int lin, int col, char jog): esta função preenche a posição informada pelos
 parâmetros lin (linha) e col (coluna) com ‘X’ ou ‘O’ que são passados para a função através de
 parâmetro jog. A função retorna um dos seguintes valores:
@@ -108,7 +110,17 @@ computador é de nível básico, intermediário ou avançado. Você deve criar u
 jogada nível básico do computador; outra função para a jogada nível intermediário do
 computador; e outra função para a jogada nível avançado do computador. Estas funções
 deverão ser chamadas dentro desta função jogada_computador.*/
-void jogada_computador(char jogada, int nivel);
+void jogada_computador(char jogada, int nivel) {
+    switch (nivel)
+    {
+    case 1:
+        basico(jogada);
+        break;
+    
+    default:
+        break;
+    } 
+}
 
 /*3. int menu( ): esta função retorna 1 se o usuário quer jogar contra o computador ou 2 caso o
 usuário queira jogar contra outro usuário. Caso o usuário queira jogar contra o computador ele
@@ -133,7 +145,7 @@ void escolha_simb(char *jogador1, char *jogador2) {
     int escolha = -1;
     char simbolo[3] = "XO";
     while ((escolha != 0) && (escolha != 1)) {
-        printf("Jogador 1: Escolha seu simbolo, Jogador 2 ficara com o outro:\n");
+        printf("Jogador 1: Escolha seu simbolo:\n");
         printf("1. X.    2. O\n");
         escolha = scanint();
         escolha--;
@@ -215,16 +227,46 @@ char confirmar() {
 }
 
 //Dificuldade facil do cpu
-void basico() {
+void basico(char jogada) {
+    int i, j, jogou = 0;
 
+    while (jogou == 0)
+        for (j = 0; j < 3; j++) { 
+            if (j == 0) {
+                if ((corpo[i][j] == ' ') && (corpo[i][j+1] != ' ')) {
+                    corpo[i][j] = jogada;    
+                    jogou++;
+                    break;
+                }    
+            }   
+            else if (j == 1) {
+                if ((corpo[i][j] == ' ') && (corpo[i][j+1] != ' ')) {
+                    corpo[i][j] = jogada;    
+                    jogou++;
+                    break;
+                }
+                else if ((corpo[i][j] == ' ') && (corpo[i][j-1] != ' ')) {
+                    corpo[i][j] = jogada;    
+                    jogou++;
+                    break;
+                }  
+            }
+            else {
+                if ((corpo[i][j] == ' ') && (corpo[i][j-1] != ' ')) {
+                    corpo[i][j] = jogada;    
+                    jogou++;
+                    break;
+                }  
+            }    
+        }    
 }
 
 //Dificuldade media do cpu
-void intermediario() {
-
+void intermediario(char jogada) {
+    int i;
 }
 
 //Dificuldade avancada do cpu
-void avancado() {
-    
+void avancado(char jogada) {
+    int i;
 }
