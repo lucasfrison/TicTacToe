@@ -39,8 +39,7 @@ char corpo[3][3];
 
 void main() {
     char jogador1, jogador2, jogada;
-    int 
-        vez = 1,  atual = 0, linha, coluna, valida, fim, vit1 = 0, 
+    int vez = 1,  atual = 0, linha, coluna, valida, fim, vit1 = 0, 
         vit2 = 0, vitcpu = 0, vit11 = 0, op, nivel, result;
 
     do {
@@ -51,6 +50,7 @@ void main() {
         system("clear");
         op = menu();
         escolha_simb(&jogador1, &jogador2);
+        
         switch (op) {
             case 1:
                 do {
@@ -61,6 +61,7 @@ void main() {
                     printf("3. Avancado.\n");
                     nivel = scanint();
                 } while ((nivel > 3) || (nivel < 1));
+                
                 for (;;) {  
                     inicio_jogada("Jogador 1", "Computador", vit11, vitcpu);  
                     if (vez == 1) { 
@@ -81,6 +82,7 @@ void main() {
                     if ((result == 1) || (result == 2)) break;    
                 }     
                 break;
+            
             case 2:
                 for (;;) {  
                     inicio_jogada("Jogador 1", "Jogador 2", vit1, vit2);  
@@ -112,8 +114,8 @@ int jogada_usuario(int linha, int coluna, char jogada) {
     coluna = scanint();
     if ((linha <= 3)&&(coluna <= 3))
         if (corpo[linha-1][coluna-1] == ' ') {
-                corpo[linha-1][coluna-1] = jogada;
-                return 0;
+            corpo[linha-1][coluna-1] = jogada;
+            return 0;
         } else return 2;
     else return 1;       
 }
