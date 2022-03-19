@@ -53,12 +53,14 @@ void main() {
         escolha_simb(&jogador1, &jogador2);
         switch (op) {
             case 1:
-                system("clear");
-                printf("Escolha o nivel de dificuldade do PC:\n\n");
-                printf("1. Basico.\n");
-                printf("2. Intermediario.\n");
-                printf("3. Avancado.\n");
-                nivel = scanint();
+                do {
+                    system("clear");
+                    printf("Escolha o nivel de dificuldade do PC:\n\n");
+                    printf("1. Basico.\n");
+                    printf("2. Intermediario.\n");
+                    printf("3. Avancado.\n");
+                    nivel = scanint();
+                } while ((nivel > 3) || (nivel < 1));
                 for (;;) {  
                     inicio_jogada("Jogador 1", "Computador", vit11, vitcpu);  
                     if (vez == 1) { 
@@ -125,12 +127,15 @@ deverão ser chamadas dentro desta função jogada_computador.*/
 void jogada_computador(char jogada, int nivel) {
     switch (nivel)
     {
-    case 1:
-        basico(jogada);
-        break;
+        case 1:
+            basico(jogada);
+            break;
     
-    default:
-        break;
+        case 2:
+            intermediario(jogada);
+            break;
+        case 3:
+            avancado(jogada);    
     } 
 }
 
