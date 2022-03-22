@@ -63,7 +63,7 @@ void main() {
                 } while ((nivel > 3) || (nivel < 1));
                 
                 for (;;) {  
-                    inicio_jogada("Jogador 1", "Computador", vit11, vitcpu);  
+                    inicio_jogada("J", "PC", vit11, vitcpu);  
                     if (vez == 1) { 
                         printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
                         jogada = jogador1;
@@ -76,27 +76,34 @@ void main() {
                         jogada_computador(jogada, nivel);
                         valida = 0;
                     }    
-                    inicio_jogada("Jogador 1", "Computador", vit11, vitcpu); 
+                    inicio_jogada("J", "PC", vit11, vitcpu); 
                     valida_jogada(valida, &vez, &atual, &fim);       
                     result = resultado(jogada, &vit11, &vitcpu, atual, 1, fim);
-                    if ((result == 1) || (result == 2)) break;    
-                }     
+                    if ((result == 1) || (result == 2)) break;       
+                }
+                inicio_jogada("J", "PC", vit11, vitcpu);     
                 break;
             
             case 2:
                 for (;;) {  
-                    inicio_jogada("Jogador 1", "Jogador 2", vit1, vit2);  
+                    inicio_jogada("J1", "J2", vit1, vit2);  
                     printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
                     if (vez == 1) jogada = jogador1;
                     else jogada = jogador2;
                     valida = jogada_usuario(linha, coluna, jogada);
-                    inicio_jogada("Jogador 1", "Jogador 2", vit1, vit2); 
+                    inicio_jogada("J1", "J2", vit1, vit2); 
                     valida_jogada(valida, &vez, &atual, &fim);
                     result = resultado(jogada, &vit1, &vit2, atual, 2, fim);
                     if ((result == 1) || (result == 2)) break;
-                }             
+                }    
+                inicio_jogada("J1", "J2", vit1, vit2);             
         }    
     } while (confirmar() != 'N');
+    system("clear");
+    printf("RESULTADO\n");
+    printf("---------\n");
+    if ((vit11 != 0) || (vitcpu != 0)) printf("J  %d x %d  PC\n\n", vit11, vitcpu);
+    if ((vit1 != 0) || (vit2 != 0)) printf("J1  %d x %d  J2\n\n", vit1, vit2);
 }       
            
 /*1. int jogada_usuario(int lin, int col, char jog): esta função preenche a posição informada pelos
@@ -270,8 +277,7 @@ void avancado(char jogada) {
 //imprime cabecalho
 void inicio_jogada(char mensagem[11], char mensagem2[11], int vit, int vit2) {
     system("clear");
-    printf("Vitorias %s: %d\n", mensagem, vit);
-    printf("Vitorias %s: %d\n\n", mensagem2, vit2);
+    printf("Vitorias: %s  %d x %d  %s\n\n", mensagem, vit, vit2, mensagem2);
     tabuleiro();
 }
 
@@ -298,20 +304,20 @@ void valida_jogada(int valida, int *vez, int *atual, int *fim) {
 //mostra o resultado
 int resultado(char jogada, int *vit1, int *vit2, int atual, int modo, int fim) {
     int verifica;
-    char mensagem[11];
 
     verifica = verifica_ganhador(jogada);
     if (verifica == 1) {
         *vit1 = atual == 1 ? ++(*vit1) : *vit1;
         *vit2 = atual == 2 ? ++(*vit2) : *vit2;
-        if (modo == 1) strcpy(mensagem, "Computador");
-        else strcpy(mensagem, "Jogador 2");
-        inicio_jogada("Jogador 1", mensagem, *vit1, *vit2);
+        if (modo == 1) inicio_jogada("J", "PC", *vit1, *vit2);
+        else inicio_jogada("J1", "J2", *vit1, *vit2);
         if ((atual == 2) && (modo == 1))
             printf("\nO Computador ganhou! Mais sorte na proxima.\n");
         else printf("\nO Jogador %d ganhou! Parabens!\n", atual);
     } else if (fim == 9) {
         verifica = 2;
+        (*vit1)++;
+        (*vit2)++;
         printf("\nDeu Velha!\n");
     }    
     return verifica;
