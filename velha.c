@@ -79,7 +79,10 @@ void main() {
                     inicio_jogada("J", "PC", vit11, vitcpu); 
                     valida_jogada(valida, &vez, &atual, &fim);       
                     result = resultado(jogada, &vit11, &vitcpu, atual, 1, fim);
-                    if ((result == 1) || (result == 2)) break;       
+                    if ((result == 1) || (result == 2)) {
+                        sleep(2);
+                        break;  
+                    }         
                 }
                 inicio_jogada("J", "PC", vit11, vitcpu);     
                 break;
@@ -94,7 +97,10 @@ void main() {
                     inicio_jogada("J1", "J2", vit1, vit2); 
                     valida_jogada(valida, &vez, &atual, &fim);
                     result = resultado(jogada, &vit1, &vit2, atual, 2, fim);
-                    if ((result == 1) || (result == 2)) break;
+                    if ((result == 1) || (result == 2)) {
+                        sleep(2);
+                        break;
+                    }    
                 }    
                 inicio_jogada("J1", "J2", vit1, vit2);             
         }    
@@ -266,7 +272,58 @@ void basico(char jogada) {
          
 //Dificuldade intermediaria do cpu
 void intermediario(char jogada) {
-    int i;
+    int i, j, l[3], c[3], maiorl, maiorc, escolha = -1;
+
+    if (corpo[1][1] == ' ') corpo[1][1] = jogada;
+    else 
+    {
+        for (i = 0; i < 3; i++) {
+            l[i] = 0;
+            c[i] = 0;
+        }
+
+        for (i = 0; i < 3; i++) {
+            for (j = 0; j < 3; j++) {
+                if (corpo[i][j] != ' ') l[i]++;
+                if (corpo[j][i] != ' ') c[i]++;  
+            } 
+        }
+
+        maiorl = 0;
+        for (i = 0; i < 3; i++) 
+            if (l[i] == 1) maiorl = i;
+
+        for (i = 0; i < 3; i++) 
+            if (l[i] == 2) maiorl = i;
+
+        maiorc = 0;
+        for (i = 0; i < 3; i++) 
+            if (c[i] == 1) maiorc = i;
+
+        for (i = 0; i < 3; i++) 
+            if (c[i] == 2) maiorc = i;
+    
+        if (c[maiorc] > l[maiorl]) escolha = 2;    
+        else if (l[maiorl] > c[maiorc]) escolha = 1;
+        else if (l[maiorl] == c[maiorc]) escolha = (rand() % 2) + 1;    
+
+        if (escolha == 1) {
+            for (i = 0; i < 3; i++) {    
+                if (corpo[maiorl][i] == ' ') {
+                    corpo[maiorl][i] = jogada;
+                    break;
+                }    
+            }
+        }    
+        else { 
+            for (i = 0; i < 3; i++) {    
+                if (corpo[i][maiorc] == ' ') {
+                    corpo[i][maiorc] = jogada;
+                    break;
+                }    
+            } 
+        }          
+    }    
 }
 
 //Dificuldade avancada do cpu
