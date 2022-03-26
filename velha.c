@@ -272,7 +272,7 @@ void basico(char jogada) {
          
 //Dificuldade intermediaria do cpu
 void intermediario(char jogada) {
-    int i, j, l[3], c[3], maiorl, maiorc, escolha = -1;
+    int i, j, k = 2, l[3], c[3], d[2], maiorl, maiorc, maiord, escolha = -1;
 
     if (corpo[1][1] == ' ') corpo[1][1] = jogada;
     else 
@@ -282,30 +282,47 @@ void intermediario(char jogada) {
             c[i] = 0;
         }
 
+        for (i = 0; i < 2; i++) 
+            d[i] = 0;
+
         for (i = 0; i < 3; i++) {
+            if (corpo[i][i] != ' ') d[0]++;
+    
+            if (corpo[i][k] != ' ') d[1]++;
+
             for (j = 0; j < 3; j++) {
                 if (corpo[i][j] != ' ') l[i]++;
                 if (corpo[j][i] != ' ') c[i]++;  
             } 
+            k--;
         }
 
         maiorl = 0;
-        for (i = 0; i < 3; i++) 
-            if (l[i] == 1) maiorl = i;
-
-        for (i = 0; i < 3; i++) 
-            if (l[i] == 2) maiorl = i;
-
         maiorc = 0;
-        for (i = 0; i < 3; i++) 
+        maiord = 0;
+        for (i = 0; i < 3; i++) {
+            if (l[i] == 1) maiorl = i;
             if (c[i] == 1) maiorc = i;
-
-        for (i = 0; i < 3; i++) 
+        }
+        for (i = 0; i < 3; i++) {
+            if (l[i] == 2) maiorl = i;
             if (c[i] == 2) maiorc = i;
+        }
+
+        for (i = 0; i < 2; i++) {
+            if (d[i] == 1) maiord = i;
+        }
+
+        for (i = 0; i < 2; i++) {
+            if (d[i] == 2) maiord = i;
+        }
     
-        if (c[maiorc] > l[maiorl]) escolha = 2;    
-        else if (l[maiorl] > c[maiorc]) escolha = 1;
-        else if (l[maiorl] == c[maiorc]) escolha = (rand() % 2) + 1;    
+        if (l[maiorl] == 2) escolha = 1; 
+        else if (c[maiorc] == 2) escolha = 2; 
+        else if (d[maiord] == 2) escolha = 3; 
+        else if (l[maiorl] == 1) escolha = 1; 
+        else if (c[maiorc] == 1) escolha = 2; 
+        else if (d[maiord] == 1) escolha = 3;
 
         if (escolha == 1) {
             for (i = 0; i < 3; i++) {    
@@ -315,12 +332,31 @@ void intermediario(char jogada) {
                 }    
             }
         }    
-        else { 
+        else if (escolha == 2){ 
             for (i = 0; i < 3; i++) {    
                 if (corpo[i][maiorc] == ' ') {
                     corpo[i][maiorc] = jogada;
                     break;
                 }    
+            } 
+        }
+        else { 
+            if (maiord == 0) {
+                for (i = 0; i < 3; i++) {    
+                    if (corpo[i][i] == ' ') {
+                        corpo[i][i] = jogada;
+                        break;
+                    }    
+                } 
+            }    
+            else {
+                for (i = 0; i < 3; i++) {    
+                    if (corpo[i][k] == ' ') {
+                        corpo[i][k] = jogada;
+                        break;
+                    }
+                    k--;        
+                 }
             } 
         }          
     }    
