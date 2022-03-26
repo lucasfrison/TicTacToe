@@ -317,9 +317,11 @@ void intermediario(char jogada) {
             if (d[i] == 2) maiord = i;
         }
     
-        if (l[maiorl] == 2) escolha = 1; 
+        if ((l[maiorl] == 2)&&(c[maiorc] == 2)&&(d[maiord] == 2)) escolha = (rand() % 3) + 1;
+        else if (l[maiorl] == 2) escolha = 1; 
         else if (c[maiorc] == 2) escolha = 2; 
         else if (d[maiord] == 2) escolha = 3; 
+        else if ((l[maiorl] == 1)&&(c[maiorc] == 1)&&(d[maiord] == 1)) escolha = (rand() % 3) + 1;
         else if (l[maiorl] == 1) escolha = 1; 
         else if (c[maiorc] == 1) escolha = 2; 
         else if (d[maiord] == 1) escolha = 3;
@@ -439,13 +441,18 @@ void avancado(char jogada) {
             if ((ganhad[i] == 2) && (d[i] == 0))
                 maiord = i;         
 
-
         if (ganhal[maiorl] == 2) escolha = 1;
         else if (ganhac[maiorc] == 2) escolha = 2;
         else if (ganhad[maiord] == 2) escolha = 3;
+        else if ((ganhal[maiorl] == 0)&&(l[maiorl] == 2)&&
+                (ganhac[maiorc] == 0)&&(c[maiorc] == 2)&&
+                (ganhad[maiord] == 0)&&(d[maiord] == 2)) escolha = (rand() % 3) + 1;  
         else if ((ganhal[maiorl] == 0)&&(l[maiorl] == 2)) escolha = 1; 
         else if ((ganhac[maiorc] == 0)&&(c[maiorc] == 2)) escolha = 2; 
         else if ((ganhad[maiord] == 0)&&(d[maiord] == 2)) escolha = 3; 
+        else if ((ganhal[maiorl] < 2)&&(l[maiorl] == 1)&&
+                (ganhac[maiorc] < 2)&&(c[maiorc] == 1)&&
+                (ganhad[maiord] < 2)&&(d[maiord] == 1)) escolha = (rand() % 3) + 1;
         else if ((ganhal[maiorl] < 2)&&(l[maiorl] == 1)) escolha = 1; 
         else if ((ganhac[maiorc] < 2)&&(c[maiorc] == 1)) escolha = 2; 
         else if ((ganhad[maiord] < 2)&&(d[maiord] == 1)) escolha = 3; 
