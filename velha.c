@@ -328,8 +328,8 @@ void intermediario(char jogada) {
 
 //Dificuldade avancada do cpu
 void avancado(char jogada) {
-    int i, j, k = 2, l[3], c[3], d[2] = {0, 0}, ganhal[3], ganhac[3], 
-    ganhad[2] = {0, 0}, maiorl, maiorc, maiord, escolha = -1;
+    int i, j, k = 2, l[3], c[3], d[2], ganhal[3], ganhac[3], 
+    ganhad[2], maiorl, maiorc, maiord, escolha = -1;
 
     if (corpo[1][1] == ' ') corpo[1][1] = jogada;
     else 
@@ -341,62 +341,78 @@ void avancado(char jogada) {
             ganhac[i] = 0;
         }
 
+        for (i = 0; i < 2; i++) {
+            ganhad[i] = 0;
+            d[i] = 0;
+        }    
+
         for (i = 0; i < 3; i++) {
+            if (corpo[i][i] != ' ') 
+                if (corpo[i][i] == jogada) ganhad[0]++;
+                else d[0]++;
+    
+            if (corpo[i][k] != ' ')    
+                if (corpo[i][k] == jogada) ganhad[1]++;
+                else d[1]++;
+
             for (j = 0; j < 3; j++) {
                 if (corpo[i][j] != ' ') 
                     if (corpo[i][j] == jogada) ganhal[i]++;
-                    else l[i]++;    
-                if (corpo[j][i] != ' ') 
-                    if (corpo[i][j] == jogada) ganhac[i]++;
-                    else c[i]++;  
-                if (corpo[i][i] != ' ') 
-                    if (corpo[i][i] == jogada) ganhad[0]++;
-                    else d[0]++;
-                if (corpo[i][k] != ' ')
-                    if (corpo[i][k] == jogada) ganhad[1]++;
-                    else d[1]++;
-                k--;             
+                    else l[i]++;   
+    
+                if (corpo[j][i] != ' ')   
+                    if (corpo[j][i] == jogada) ganhac[i]++;
+                    else c[i]++;                  
             } 
+            k--; 
         }     
     
         maiorl = 0;
-        
-        for (i = 0; i < 3; i++) {
-            if ((l[i] == 1) && (ganhal[i] < 2)) maiorl = i;
-            else  
-            if ((l[i] == 2) && (ganhal[i] == 0)) maiorl = i;
-            else 
-            if ((ganhal[i] == 2) && (l[i] == 0)) maiorl = i;    
-        }
-
         maiorc = 0;
         
         for (i = 0; i < 3; i++) {
-            if ((c[i] == 1) && (ganhac[i] < 2)) maiorc = i;
-            else     
-            if ((c[i] == 2) && (ganhac[i] == 0)) maiorc = i;
-            else
-            if ((ganhac[i] == 2) && (c[i] == 0)) maiorc = i; 
-        }
+            if ((l[i] == 1) && (ganhal[i] < 2)) 
+                maiorl = i;
+            if ((c[i] == 1) && (ganhac[i] < 2))
+                maiorc = i;    
+        }       
+        
+        for (i = 0; i < 3; i++) {
+            if ((l[i] == 2) && (ganhal[i] == 0)) 
+                maiorl = i;
+            if ((c[i] == 2) && (ganhac[i] == 0)) 
+                maiorc = i;    
+        }      
+
+        for (i = 0; i < 3; i++) {
+            if ((ganhal[i] == 2) && (l[i] == 0)) 
+                maiorl = i;
+            if ((ganhac[i] == 2) && (c[i] == 0)) 
+                maiorc = i;    
+        }    
   
         maiord = 0;
 
-        for (i = 0; i < 2; i++) {
-            if ((d[i] == 1) && (ganhad[i] < 2)) maiord = i;
-            else  
-            if ((d[i] == 2) && (ganhad[i] == 0)) maiord = i;
-            else 
-            if ((ganhad[i] == 2) && (d[i] == 0)) maiord = i;    
-        }
+        for (i = 0; i < 2; i++)  
+            if ((d[i] == 1) && (ganhad[i] < 2)) 
+                maiord = i;
+        for (i = 0; i < 2; i++)       
+            if ((d[i] == 2) && (ganhad[i] == 0))
+                maiord = i;
+        for (i = 0; i < 2; i++) 
+            if ((ganhad[i] == 2) && (d[i] == 0))
+                maiord = i;         
 
 
         if (ganhal[maiorl] == 2) escolha = 1;
         else if (ganhac[maiorc] == 2) escolha = 2;
         else if (ganhad[maiord] == 2) escolha = 3;
-        else if ((c[maiorc] > l[maiorl])&&(c[maiorc] >= d[maiord])) escolha = 2;    
-        else if ((l[maiorl] > c[maiorc])&&(l[maiorl] >= d[maiord])) escolha = 1;
-        else if ((d[maiord] > l[maiorl])&&(d[maiord] >= c[maiorc])) escolha = 3;
-        else if ((l[maiorl] == c[maiorc])&&(c[maiorc] == d[maiord])) escolha = (rand() % 3) + 1; 
+        else if ((ganhal[maiorl] == 0)&&(l[maiorl] == 2)) escolha = 1; 
+        else if ((ganhac[maiorc] == 0)&&(c[maiorc] == 2)) escolha = 2; 
+        else if ((ganhad[maiord] == 0)&&(d[maiord] == 2)) escolha = 3; 
+        else if ((ganhal[maiorl] < 2)&&(l[maiorl] == 1)) escolha = 1; 
+        else if ((ganhac[maiorc] < 2)&&(c[maiorc] == 1)) escolha = 2; 
+        else if ((ganhad[maiord] < 2)&&(d[maiord] == 1)) escolha = 3; 
 
         k = 2;   
 
@@ -427,7 +443,7 @@ void avancado(char jogada) {
             }    
             else {
                 for (i = 0; i < 3; i++) {    
-                    if (corpo[i][k] != ' ') {
+                    if (corpo[i][k] == ' ') {
                         corpo[i][k] = jogada;
                         break;
                     }
