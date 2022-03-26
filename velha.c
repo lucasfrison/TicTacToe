@@ -351,7 +351,7 @@ void intermediario(char jogada) {
                 }    
             } 
         }
-        else { 
+        else if (escolha == 3) { 
             if (maiord == 0) {
                 for (i = 0; i < 3; i++) {    
                     if (corpo[i][i] == ' ') {
@@ -369,7 +369,11 @@ void intermediario(char jogada) {
                     k--;        
                  }
             } 
-        }          
+        }
+        else
+            for (i = 0; i < 3; i++)
+                for (j = 0; j < 3; j++)
+                    if (corpo[i][j] == ' ') corpo[i][j] = jogada;          
     }    
 }
 
@@ -490,7 +494,7 @@ void avancado(char jogada) {
                 }    
             } 
         }
-        else { 
+        else if (escolha == 3) { 
             if (maiord == 0) {
                 for (i = 0; i < 3; i++) {    
                     if (corpo[i][i] == ' ') {
@@ -508,7 +512,11 @@ void avancado(char jogada) {
                     k--;        
                  }
             } 
-        }                  
+        }
+        else
+            for (i = 0; i < 3; i++)
+                for (j = 0; j < 3; j++)
+                    if (corpo[i][j] == ' ') corpo[i][j] = jogada;                  
     }  
 }
 
