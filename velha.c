@@ -5,35 +5,36 @@
 #include <unistd.h>
 #include <time.h>
 
+typedef struct Velha
+{
+ int Partida; /*número da partida (Ex: primeira(1), segunda(2), terceira(3), ….,
+ partida)*/
+ char JogVelha[3][3]; // Tabuleiro do jogo. Armazenará as jogadas
+ char resultado; // Resultado da Partida: X, 0 ou V(equivale a Velha - empate)
+} partida;
+
+//FUNCOES TRABALHO 1
 int jogada_usuario(int linha, int coluna, char jogada);
-
 void jogada_computador(char jogada, int nivel);
-
 int menu();
-
 void escolha_simb(char *jogador1, char *jogador2);
-
 void inicializa_velha();
-
 int verifica_ganhador(char jogada);
-
 void tabuleiro();
-
 int scanint();
-
 char confirmar();
-
 void basico(char jogada);
-
 void intermediario(char jogada);
-
 void avancado(char jogada);
-
 void inicio_jogada(char mensagem[10], char mensagem2[10], int vit, int vit2);
-
 void valida_jogada(int valida, int *vez, int *atual, int *fim);
-
 int resultado(char jogada, int *vit1, int *vit2, int atual, int modo, int fim); 
+
+//FUNCOES NOVAS, TRABALHO 2
+void gerar_txt(char *nome1, char *nome2, char simbolo1, char simbolo2);
+int gerar_bin(char *nome_arquivo, partida Partida);
+partida ler_bin(char *nome_arquivo, int num_partida);
+void imprime_campeonato();
 
 //corpo do jogo
 char corpo[3][3];
@@ -576,4 +577,35 @@ int resultado(char jogada, int *vit1, int *vit2, int atual, int modo, int fim) {
         printf("\nDeu Velha!\n");
     }    
     return verifica;
+}
+
+/*1) Função que grava em um arquivo txt as informações abaixo, no seguinte formato:
+Nome do Jogador 1; símbolo; Nome do Jogador 2; símbolo.
+Exemplo: Maria; X; José; 0*/
+void gerar_txt(char *nome1, char *nome2, char simbolo1, char simbolo2){
+
+}
+
+/*2) Função que grava em um arquivo binário uma partida do Jogo da Velha.
+A função deve ter como entrada os seguintes parâmetros: (1) parâmetro string com o nome
+do arquivo; (2) parâmetro Partida com os dados da partida. A função retorna 1 se a gravação
+for um sucesso e zero caso contrário.*/
+int gerar_bin(char *nome_arquivo, partida Partida){
+    return 1;
+    return 0;
+}
+
+/*3) Função que lê do arquivo binário os dados de uma determinada partida.
+A função deve ter como entrada os seguintes parâmetros: (1) parâmetro string com o nome do
+arquivo; (2) parâmetro inteiro com o número da partida a ser lida. A função retorna o registro com
+os dados da partida que foi lida.*/
+partida ler_bin(char *nome_arquivo, int num_partida){
+    
+}
+
+/*4) Função que imprime na tela todas as partidas (tabuleiros com as respectivas jogadas e quem
+ganhou) e o placar final (Ex: Maria 10 X José 5) A Maria foi a campeã do Campeonato de Jogo da
+Velha!!!*/
+void imprime_campeonato(){
+
 }
