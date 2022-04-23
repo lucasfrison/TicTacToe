@@ -32,9 +32,9 @@ int resultado(char jogada, int *vit1, int *vit2, int atual, int modo, int fim);
 
 //FUNCOES NOVAS, TRABALHO 2
 void gerar_txt(char *nome1, char *nome2, char simbolo1, char simbolo2);
-int gerar_bin(char *nome_arquivo, partida Partida);
-partida ler_bin(char *nome_arquivo, int num_partida);
-void imprime_campeonato();
+int gerar_bin(char *nome_arquivo, partida Partida); //PENDENTE
+partida ler_bin(char *nome_arquivo, int num_partida); //PENDENTE
+void imprime_campeonato(); //PENDENTE
 void limpa_buffer();
 void ler_nome(char *nome, char mensagem);
 
