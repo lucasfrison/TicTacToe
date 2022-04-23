@@ -620,7 +620,7 @@ int gerar_bin(char *nome_arquivo, partida *Partida){
     FILE *bin = fopen(nome_arquivo, "ab");
 
     fwrite(Partida, 1, sizeof(partida), bin);
-    fclose(nome_arquivo);
+    fclose(bin);
     return 1;
     return 0;
 }
