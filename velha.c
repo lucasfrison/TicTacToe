@@ -53,11 +53,12 @@ void main() {
         inicializa_velha();
         system("clear");
         op = menu();
-        escolha_simb(&jogador1, &jogador2);
         
         switch (op) {
             case 1:
                 do {
+                    if ((vit11 == 0) && (vitcpu == 0))
+                       escolha_simb(&jogador1, &jogador2);  
                     system("clear");
                     printf("Escolha o nivel de dificuldade do PC:\n\n");
                     printf("1. Basico.\n");
@@ -94,11 +95,9 @@ void main() {
             case 2:
                 
                 if ((vit1 == 0) && (vit2 == 0)) {
-                    limpa_buffer();
-                    ler_nome(nome1, '1');
-                    ler_nome(nome2, '2');
+                    escolha_simb(&jogador1, &jogador2);
                     gerar_txt(nome1, nome2, jogador1, jogador2);
-                }
+                }    
 
                 for (;;) {   
                     inicio_jogada("J1", "J2", vit1, vit2);  
@@ -594,6 +593,9 @@ Nome do Jogador 1; símbolo; Nome do Jogador 2; símbolo.
 Exemplo: Maria; X; José; 0*/
 void gerar_txt(char *nome1, char *nome2, char simbolo1, char simbolo2){
     FILE *jogadores = fopen("jogadores.txt", "w");
+    limpa_buffer();
+    ler_nome(nome1, '1');
+    ler_nome(nome2, '2');
     fprintf(jogadores, "Jogador 1:\n  Nome: %s  Simbolo: %c\n\n", nome1, simbolo1);
     fprintf(jogadores, "Jogador 2:\n  Nome: %s  Simbolo: %c", nome2, simbolo2);
     fclose(jogadores);
