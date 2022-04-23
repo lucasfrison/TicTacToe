@@ -35,12 +35,14 @@ void gerar_txt(char *nome1, char *nome2, char simbolo1, char simbolo2);
 int gerar_bin(char *nome_arquivo, partida Partida);
 partida ler_bin(char *nome_arquivo, int num_partida);
 void imprime_campeonato();
+void limpa_buffer();
+void ler_nome(char *nome, char mensagem);
 
 //corpo do jogo
 char corpo[3][3];
 
 void main() {
-    char jogador1, jogador2, jogada;
+    char jogador1, jogador2, jogada, nome1[100], nome2[100];
     int vez = 1,  atual = 0, linha, coluna, valida, fim, vit1 = 0, 
         vit2 = 0, vitcpu = 0, vit11 = 0, op, nivel, result;
 
@@ -90,7 +92,14 @@ void main() {
                 break;
             
             case 2:
-                for (;;) {  
+                
+                if ((vit1 == 0) && (vit2 == 0)) {
+                    limpa_buffer();
+                    ler_nome(nome1, '1');
+                    ler_nome(nome2, '2');
+                }
+
+                for (;;) {   
                     inicio_jogada("J1", "J2", vit1, vit2);  
                     printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
                     if (vez == 1) jogada = jogador1;
@@ -240,10 +249,10 @@ void tabuleiro() {
 //Le um char e retorna o valor inteiro
 int scanint() {
     char str;
-    int val = 0;
+    int val;
     
     scanf(" %c", &str);
-    val = atoi(&str);
+    val = atoi(&str);  
     return val; 
 }
 
@@ -583,7 +592,7 @@ int resultado(char jogada, int *vit1, int *vit2, int atual, int modo, int fim) {
 Nome do Jogador 1; símbolo; Nome do Jogador 2; símbolo.
 Exemplo: Maria; X; José; 0*/
 void gerar_txt(char *nome1, char *nome2, char simbolo1, char simbolo2){
-
+    FILE *jogadores = fopen("jogadores.txt", "w");
 }
 
 /*2) Função que grava em um arquivo binário uma partida do Jogo da Velha.
@@ -608,4 +617,14 @@ ganhou) e o placar final (Ex: Maria 10 X José 5) A Maria foi a campeã do Campe
 Velha!!!*/
 void imprime_campeonato(){
 
+}
+
+void limpa_buffer(){
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+void ler_nome(char *nome, char mensagem){
+    printf("Jogador %c, seu nome: ", mensagem);
+    fgets(nome,100,stdin);
 }
