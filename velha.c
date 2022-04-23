@@ -7,10 +7,10 @@
 
 typedef struct Velha
 {
- int Partida; /*número da partida (Ex: primeira(1), segunda(2), terceira(3), ….,
- partida)*/
- char JogVelha[3][3]; // Tabuleiro do jogo. Armazenará as jogadas
- char resultado; // Resultado da Partida: X, 0 ou V(equivale a Velha - empate)
+    int Partida; /*número da partida (Ex: primeira(1), segunda(2), terceira(3), ….,
+    partida)*/
+    char JogVelha[3][3]; // Tabuleiro do jogo. Armazenará as jogadas
+    char resultado; // Resultado da Partida: X, 0 ou V(equivale a Velha - empate)
 } partida;
 
 //FUNCOES TRABALHO 1
@@ -32,7 +32,7 @@ int resultado(char jogada, int *vit1, int *vit2, int atual, int modo, int fim);
 
 //FUNCOES NOVAS, TRABALHO 2
 void gerar_txt(char *nome1, char *nome2, char simbolo1, char simbolo2);
-int gerar_bin(char *nome_arquivo, partida Partida); //PENDENTE
+int gerar_bin(char *nome_arquivo, partida *Partida); //PENDENTE
 partida ler_bin(char *nome_arquivo, int num_partida); //PENDENTE
 void imprime_campeonato(); //PENDENTE
 void limpa_buffer();
@@ -44,7 +44,11 @@ char corpo[3][3];
 void main() {
     char jogador1, jogador2, jogada, nome1[100], nome2[100];
     int vez = 1,  atual = 0, linha, coluna, valida, fim, vit1 = 0, 
-        vit2 = 0, vitcpu = 0, vit11 = 0, op, nivel, result;
+        vit2 = 0, vitcpu = 0, vit11 = 0, op, nivel, result, i, j;
+    partida jogo, *jogoptr = &jogo;  
+    FILE *bin = fopen("campeonato.bin", "wb");
+
+    jogo.Partida = 0;
 
     do {
         valida = 0;
@@ -113,8 +117,15 @@ void main() {
                         break;
                     }    
                 }    
-                inicio_jogada("J1", "J2", vit1, vit2);             
-        }    
+                inicio_jogada("J1", "J2", vit1, vit2);
+                jogo.Partida++; 
+                for (i = 0; i < 3; i++) {
+                    for (j = 0; j < 3; j++)
+                        jogo.JogVelha[i][j] = corpo[i][j];
+                }
+                jogo.resultado = result == 2 ? 'V' : jogada;
+                gerar_bin("campeonato.txt", jogoptr);            
+        } 
     } while (confirmar() != 'N');
     system("clear");
     printf("RESULTADO\n");
@@ -605,7 +616,11 @@ void gerar_txt(char *nome1, char *nome2, char simbolo1, char simbolo2){
 A função deve ter como entrada os seguintes parâmetros: (1) parâmetro string com o nome
 do arquivo; (2) parâmetro Partida com os dados da partida. A função retorna 1 se a gravação
 for um sucesso e zero caso contrário.*/
-int gerar_bin(char *nome_arquivo, partida Partida){
+int gerar_bin(char *nome_arquivo, partida *Partida){
+    FILE *bin = fopen(nome_arquivo, "ab");
+
+    fwrite(Partida, 1, sizeof(partida), bin);
+    fclose(nome_arquivo);
     return 1;
     return 0;
 }
