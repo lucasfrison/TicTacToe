@@ -124,7 +124,7 @@ void main() {
                         jogo.JogVelha[i][j] = corpo[i][j];
                 }
                 jogo.resultado = result == 2 ? 'V' : jogada;
-                gerar_bin("campeonato.txt", jogoptr);            
+                gerar_bin("campeonato.bin", jogoptr);            
         } 
     } while (confirmar() != 'N');
     system("clear");
