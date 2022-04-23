@@ -26,7 +26,7 @@ char confirmar();
 void basico(char jogada);
 void intermediario(char jogada);
 void avancado(char jogada);
-void inicio_jogada(char mensagem[10], char mensagem2[10], int vit, int vit2);
+void inicio_jogada(char mensagem[2], char mensagem2[2], int vit, int vit2);
 void valida_jogada(int valida, int *vez, int *atual, int *fim);
 int resultado(char jogada, int *vit1, int *vit2, int atual, int modo, int fim); 
 
@@ -97,6 +97,7 @@ void main() {
                     limpa_buffer();
                     ler_nome(nome1, '1');
                     ler_nome(nome2, '2');
+                    gerar_txt(nome1, nome2, jogador1, jogador2);
                 }
 
                 for (;;) {   
@@ -540,7 +541,7 @@ void avancado(char jogada) {
 }
 
 //imprime cabecalho
-void inicio_jogada(char mensagem[11], char mensagem2[11], int vit, int vit2) {
+void inicio_jogada(char mensagem[2], char mensagem2[2], int vit, int vit2) {
     system("clear");
     printf("Vitorias: %s  %d x %d  %s\n\n", mensagem, vit, vit2, mensagem2);
     tabuleiro();
@@ -593,6 +594,9 @@ Nome do Jogador 1; símbolo; Nome do Jogador 2; símbolo.
 Exemplo: Maria; X; José; 0*/
 void gerar_txt(char *nome1, char *nome2, char simbolo1, char simbolo2){
     FILE *jogadores = fopen("jogadores.txt", "w");
+    fprintf(jogadores, "Jogador 1:\n  Nome: %s  Simbolo: %c\n\n", nome1, simbolo1);
+    fprintf(jogadores, "Jogador 2:\n  Nome: %s  Simbolo: %c", nome2, simbolo2);
+    fclose(jogadores);
 }
 
 /*2) Função que grava em um arquivo binário uma partida do Jogo da Velha.
