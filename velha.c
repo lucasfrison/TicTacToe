@@ -644,6 +644,7 @@ partida ler_bin(char *nome_arquivo, int num_partida){
     do {
         fread(&jogo, sizeof(partida), 1, bin);
     } while (jogo.Partida != num_partida); 
+    fclose(bin);
     return jogo;
 }
 
