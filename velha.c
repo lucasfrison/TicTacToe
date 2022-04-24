@@ -32,8 +32,8 @@ int resultado(char jogada, int *vit1, int *vit2, int atual, int modo, int fim);
 
 //FUNCOES NOVAS, TRABALHO 2
 void gerar_txt(char *nome1, char *nome2, char simbolo1, char simbolo2);
-int gerar_bin(char *nome_arquivo, partida *Partida); //PENDENTE
-partida ler_bin(char *nome_arquivo, int num_partida); //PENDENTE
+int gerar_bin(char *nome_arquivo, partida *Partida); 
+partida ler_bin(char *nome_arquivo, int num_partida);
 void imprime_campeonato(); //PENDENTE
 void limpa_buffer();
 void ler_nome(char *nome, char mensagem);
@@ -42,12 +42,14 @@ void ler_nome(char *nome, char mensagem);
 char corpo[3][3];
 
 void main() {
+    char arq_bin[] = "campeonato.bin"; 
     char jogador1, jogador2, jogada, nome1[100], nome2[100];
     int vez = 1,  atual = 0, linha, coluna, valida, fim, vit1 = 0, 
         vit2 = 0, vitcpu = 0, vit11 = 0, op, nivel, result, i, j;
-    partida jogo, *jogoptr = &jogo;  
-    FILE *bin = fopen("campeonato.bin", "wb");
+    partida jogo, jogolido, *jogoptr = &jogo;  
+    FILE *bin = fopen(arq_bin, "wb");
 
+    fclose(bin);
     jogo.Partida = 0;
 
     do {
@@ -124,7 +126,8 @@ void main() {
                         jogo.JogVelha[i][j] = corpo[i][j];
                 }
                 jogo.resultado = result == 2 ? 'V' : jogada;
-                gerar_bin("campeonato.bin", jogoptr);            
+                if (gerar_bin(arq_bin, jogoptr) == 0) 
+                    printf("\nERRO AO GRAVAR NO ARQUIVO\n");            
         } 
     } while (confirmar() != 'N');
     system("clear");
@@ -619,10 +622,13 @@ for um sucesso e zero caso contrário.*/
 int gerar_bin(char *nome_arquivo, partida *Partida){
     FILE *bin = fopen(nome_arquivo, "ab");
 
-    fwrite(Partida, 1, sizeof(partida), bin);
-    fclose(bin);
-    return 1;
-    return 0;
+    if (fwrite(Partida, 1, sizeof(partida), bin) < sizeof(partida)) {
+        fclose(bin);
+        return 0;
+    } else {
+        fclose(bin);
+        return 1;
+    }    
 }
 
 /*3) Função que lê do arquivo binário os dados de uma determinada partida.
@@ -630,7 +636,13 @@ A função deve ter como entrada os seguintes parâmetros: (1) parâmetro string
 arquivo; (2) parâmetro inteiro com o número da partida a ser lida. A função retorna o registro com
 os dados da partida que foi lida.*/
 partida ler_bin(char *nome_arquivo, int num_partida){
-    
+    FILE *bin = fopen(nome_arquivo, "rb");
+    int count = num_partida - 1;
+    partida jogo;
+
+    fseek(bin, count*sizeof(partida), SEEK_CUR);
+    fread(&jogo, sizeof(partida), 1, bin);
+    return jogo;
 }
 
 /*4) Função que imprime na tela todas as partidas (tabuleiros com as respectivas jogadas e quem
