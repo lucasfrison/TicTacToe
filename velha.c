@@ -46,7 +46,7 @@ void main() {
     char jogador1, jogador2, jogada, nome1[100], nome2[100];
     int vez = 1,  atual = 0, linha, coluna, valida, fim, vit1 = 0, 
         vit2 = 0, vitcpu = 0, vit11 = 0, op, nivel, result, i, j;
-    partida jogo, jogolido, *jogoptr = &jogo;  
+    partida jogo, jogolido, *jogoptr = &jogo; 
     FILE *bin = fopen(arq_bin, "wb");
 
     fclose(bin);
@@ -637,10 +637,10 @@ arquivo; (2) parâmetro inteiro com o número da partida a ser lida. A função 
 os dados da partida que foi lida.*/
 partida ler_bin(char *nome_arquivo, int num_partida){
     FILE *bin = fopen(nome_arquivo, "rb");
-    int count = num_partida - 1;
+    //int count = num_partida - 1;
     partida jogo;
 
-    fseek(bin, count*sizeof(partida), SEEK_CUR);
+    fseek(bin, sizeof(partida), SEEK_CUR);
     fread(&jogo, sizeof(partida), 1, bin);
     return jogo;
 }
