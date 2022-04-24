@@ -127,7 +127,7 @@ void main() {
                 }
                 jogo.resultado = result == 2 ? 'V' : jogada;
                 if (gerar_bin(arq_bin, jogoptr) == 0) 
-                    printf("\nERRO AO GRAVAR NO ARQUIVO\n");            
+                    printf("\nERRO AO GRAVAR NO ARQUIVO\n");               
         } 
     } while (confirmar() != 'N');
     system("clear");
@@ -640,8 +640,10 @@ partida ler_bin(char *nome_arquivo, int num_partida){
     //int count = num_partida - 1;
     partida jogo;
 
-    fseek(bin, sizeof(partida), SEEK_CUR);
-    fread(&jogo, sizeof(partida), 1, bin);
+    //fseek(bin, sizeof(partida), SEEK_CUR);
+    do {
+        fread(&jogo, sizeof(partida), 1, bin);
+    } while (jogo.Partida != num_partida); 
     return jogo;
 }
 
