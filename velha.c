@@ -26,7 +26,7 @@ char confirmar();
 void basico(char jogada);
 void intermediario(char jogada);
 void avancado(char jogada);
-void inicio_jogada(char mensagem[2], char mensagem2[2], int vit, int vit2);
+void inicio_jogada(char *mensagem, char *mensagem2, int vit, int vit2);
 void valida_jogada(int valida, int *vez, int *atual, int *fim);
 int resultado(char jogada, int *vit1, int *vit2, int atual, int modo, int fim); 
 
@@ -34,7 +34,7 @@ int resultado(char jogada, int *vit1, int *vit2, int atual, int modo, int fim);
 void gerar_txt(char *nome1, char *nome2, char simbolo1, char simbolo2);
 int gerar_bin(char *nome_arquivo, partida *Partida); 
 partida ler_bin(char *nome_arquivo, int num_partida);
-void imprime_campeonato(); //PENDENTE
+void imprime_campeonato(int MAX, char *nome_bin, char *nome_txt); //PENDENTE
 void limpa_buffer();
 void ler_nome(char *nome, char mensagem);
 
@@ -43,7 +43,7 @@ char corpo[3][3];
 
 void main() {
     char arq_bin[] = "campeonato.bin"; 
-    char jogador1, jogador2, jogada, nome1[100], nome2[100];
+    char jogador1, jogador2, jogada, nome1[100], nome2[100], nome1_res[100], nome2_res[100];
     int vez = 1,  atual = 0, linha, coluna, valida, fim, vit1 = 0, 
         vit2 = 0, vitcpu = 0, vit11 = 0, op, nivel, result, i, j;
     partida jogo, jogolido, *jogoptr = &jogo; 
@@ -105,13 +105,24 @@ void main() {
                     gerar_txt(nome1, nome2, jogador1, jogador2);
                 }    
 
+                strcpy(nome1_res, nome1);
+                strcpy(nome2_res, nome2);
+                for (i = 0; i < 100; i++) {
+                    if (nome1_res[i] == '\n') nome1_res[i] = '\0';
+                    if (nome2_res[i] == '\n') nome2_res[i] = '\0';
+                }
                 for (;;) {   
-                    inicio_jogada("J1", "J2", vit1, vit2);  
-                    printf("\nJogador %d: Digite a linha e a coluna para jogar (L C):\n", vez);
-                    if (vez == 1) jogada = jogador1;
-                    else jogada = jogador2;
+                    inicio_jogada(nome1_res, nome2_res, vit1, vit2);     
+                    if (vez == 1) {
+                        jogada = jogador1;
+                        printf("\n%s: Digite a linha e a coluna para jogar (L C):\n", nome1_res);
+                    }    
+                    else {
+                        jogada = jogador2;
+                        printf("\n%s: Digite a linha e a coluna para jogar (L C):\n", nome2_res);
+                    }    
                     valida = jogada_usuario(linha, coluna, jogada);
-                    inicio_jogada("J1", "J2", vit1, vit2); 
+                    inicio_jogada(nome1_res, nome2_res, vit1, vit2); 
                     valida_jogada(valida, &vez, &atual, &fim);
                     result = resultado(jogada, &vit1, &vit2, atual, 2, fim);
                     if ((result == 1) || (result == 2)) {
@@ -119,7 +130,7 @@ void main() {
                         break;
                     }    
                 }    
-                inicio_jogada("J1", "J2", vit1, vit2);
+                inicio_jogada(nome1_res, nome2_res, vit1, vit2);
                 jogo.Partida++; 
                 for (i = 0; i < 3; i++) {
                     for (j = 0; j < 3; j++)
@@ -131,10 +142,13 @@ void main() {
         } 
     } while (confirmar() != 'N');
     system("clear");
-    printf("RESULTADO\n");
-    printf("---------\n");
-    if ((vit11 != 0) || (vitcpu != 0)) printf("J  %d x %d  PC\n\n", vit11, vitcpu);
-    if ((vit1 != 0) || (vit2 != 0)) printf("J1  %d x %d  J2\n\n", vit1, vit2);
+    if ((vit11 != 0) || (vitcpu != 0)) {
+        printf("RESULTADO CONTRA O PC\n");
+        printf("---------------------\n");
+        printf("J  %d x %d  PC\n\n", vit11, vitcpu);
+    }    
+    if ((vit1 != 0) || (vit2 != 0)) 
+        imprime_campeonato(jogo.Partida, arq_bin, "jogadores.txt");
 }       
            
 /*1. int jogada_usuario(int lin, int col, char jog): esta função preenche a posição informada pelos
@@ -554,7 +568,7 @@ void avancado(char jogada) {
 }
 
 //imprime cabecalho
-void inicio_jogada(char mensagem[2], char mensagem2[2], int vit, int vit2) {
+void inicio_jogada(char *mensagem, char *mensagem2, int vit, int vit2) {
     system("clear");
     printf("Vitorias: %s  %d x %d  %s\n\n", mensagem, vit, vit2, mensagem2);
     tabuleiro();
@@ -607,11 +621,12 @@ Nome do Jogador 1; símbolo; Nome do Jogador 2; símbolo.
 Exemplo: Maria; X; José; 0*/
 void gerar_txt(char *nome1, char *nome2, char simbolo1, char simbolo2){
     FILE *jogadores = fopen("jogadores.txt", "w");
+    char *str;
     limpa_buffer();
     ler_nome(nome1, '1');
     ler_nome(nome2, '2');
-    fprintf(jogadores, "Jogador 1:\n  Nome: %s  Simbolo: %c\n\n", nome1, simbolo1);
-    fprintf(jogadores, "Jogador 2:\n  Nome: %s  Simbolo: %c", nome2, simbolo2);
+    fprintf(jogadores, "%s%c\n", nome1, simbolo1);
+    fprintf(jogadores, "%s%c", nome2, simbolo2);
     fclose(jogadores);
 }
 
@@ -621,8 +636,8 @@ do arquivo; (2) parâmetro Partida com os dados da partida. A função retorna 1
 for um sucesso e zero caso contrário.*/
 int gerar_bin(char *nome_arquivo, partida *Partida){
     FILE *bin = fopen(nome_arquivo, "ab");
-
-    if (fwrite(Partida, 1, sizeof(partida), bin) < sizeof(partida)) {
+                                                //<
+    if (fwrite(Partida, 1, sizeof(partida), bin) != sizeof(partida)) {
         fclose(bin);
         return 0;
     } else {
@@ -637,10 +652,8 @@ arquivo; (2) parâmetro inteiro com o número da partida a ser lida. A função 
 os dados da partida que foi lida.*/
 partida ler_bin(char *nome_arquivo, int num_partida){
     FILE *bin = fopen(nome_arquivo, "rb");
-    //int count = num_partida - 1;
     partida jogo;
 
-    //fseek(bin, sizeof(partida), SEEK_CUR);
     do {
         fread(&jogo, sizeof(partida), 1, bin);
     } while (jogo.Partida != num_partida); 
@@ -651,8 +664,58 @@ partida ler_bin(char *nome_arquivo, int num_partida){
 /*4) Função que imprime na tela todas as partidas (tabuleiros com as respectivas jogadas e quem
 ganhou) e o placar final (Ex: Maria 10 X José 5) A Maria foi a campeã do Campeonato de Jogo da
 Velha!!!*/
-void imprime_campeonato(){
+void imprime_campeonato(int MAX, char *nome_bin, char *nome_txt){
+    int i, j, k, vitoria1 = 0, vitoria2 = 0;
+    partida jogo;
+    FILE *txt = fopen(nome_txt, "r");
+    char nome1[100], nome2[100], simbolo, simbolo2, quebra;
 
+    fgets(nome1, 100, txt);
+    simbolo = fgetc(txt);
+    quebra = fgetc(txt);
+    fgets(nome2, 100, txt);
+    simbolo2 = fgetc(txt);
+    
+    for (i = 0; i < 100; i++) {
+        if (nome1[i] == '\n') nome1[i] = '\0';
+        if (nome2[i] == '\n') nome2[i] = '\0';
+    }
+
+    printf("\nRESULTADO DO CAMPEONATO POR PARTIDA:\n");
+    printf("-----------------------------------");
+    for (i = 1; i < MAX + 1; i++) {
+        jogo = ler_bin(nome_bin, i);
+        if (jogo.resultado == simbolo) vitoria1++;
+        else if (jogo.resultado == simbolo2) vitoria2++;
+        else {
+            vitoria1++;
+            vitoria2++;
+        }
+        printf("\nPARTIDA %d\n\n", jogo.Partida);
+        for (j = 0; j < 3; j++) {
+            for (k = 0; k < 3; k++) 
+                if (k == 2)                   
+                    if (j != 2) printf("  %c\n-----------------\n", jogo.JogVelha[j][k]);
+                    else printf("  %c\n", jogo.JogVelha[j][k]);                    
+                else printf("  %c  |", jogo.JogVelha[j][k]);
+        }
+        printf("\nRESULTADO: %c\n", jogo.resultado);
+        if (jogo.resultado == 'V') printf("\nEMPATOU");
+        else if (jogo.resultado == simbolo) printf("\n%s VENCEU", nome1);
+        else printf("\n%s VENCEU", nome2);
+        printf("\n_________________\n\n");
+        printf("ENTER PARA CONTINUAR\n");
+        if (i == 1) limpa_buffer();
+        getchar();
+    }
+    fclose(txt);
+    printf("----------------\n");
+    printf("RESULTADO FINAL: ");
+    printf(" %s  %d X %d  %s\n\n", nome1, vitoria1, vitoria2, nome2);
+    if (vitoria1 == vitoria2) printf("EMPATE.\n");
+    else if (vitoria1 > vitoria2) printf("%s VENCEU O CAMPEONATO!\n", nome1);
+    else printf("%s VENCEU O CAMPEONATO!\n", nome2);
+    printf("----------------\n");
 }
 
 void limpa_buffer(){
@@ -661,6 +724,10 @@ void limpa_buffer(){
 }
 
 void ler_nome(char *nome, char mensagem){
+    int i;
+
     printf("Jogador %c, seu nome: ", mensagem);
-    fgets(nome,100,stdin);
+    fgets(nome,100,stdin); 
+    for (i = 0; i < strlen(nome); i++)
+        nome[i] = toupper(nome[i]);
 }
