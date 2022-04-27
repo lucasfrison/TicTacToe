@@ -45,7 +45,7 @@ void main() {
     char arq_bin[] = "campeonato.bin"; 
     char jogador1, jogador2, jogada, nome1[100], nome2[100], nome1_res[100], nome2_res[100];
     char confirma;
-    int vez = 1,  atual = 0, linha, coluna, valida, fim, vit1 = 0, 
+    int vez = 1, vez2 = 1,  atual = 0, atual2 = 0, linha, coluna, valida, fim, vit1 = 0, 
         vit2 = 0, vitcpu = 0, vit11 = 0, op, nivel, result, i, j;
     partida jogo, jogolido, *jogoptr = &jogo; 
     FILE *bin = fopen(arq_bin, "wb");
@@ -57,6 +57,7 @@ void main() {
         valida = 0;
         fim = 0;
         vez = atual == 1 ? 2 : 1;
+        vez2 = atual2 == 1 ? 2 : 1;
         inicializa_velha();
         system("clear");
         op = menu();
@@ -114,7 +115,7 @@ void main() {
                 }
                 for (;;) {   
                     inicio_jogada(nome1_res, nome2_res, vit1, vit2);     
-                    if (vez == 1) {
+                    if (vez2 == 1) {
                         jogada = jogador1;
                         printf("\n%s: Digite a linha e a coluna para jogar (L C):\n", nome1_res);
                     }    
@@ -124,8 +125,8 @@ void main() {
                     }    
                     valida = jogada_usuario(linha, coluna, jogada);
                     inicio_jogada(nome1_res, nome2_res, vit1, vit2); 
-                    valida_jogada(valida, &vez, &atual, &fim);
-                    result = resultado(jogada, &vit1, &vit2, atual, 2, fim);
+                    valida_jogada(valida, &vez2, &atual2, &fim);
+                    result = resultado(jogada, &vit1, &vit2, atual2, 2, fim);
                     if ((result == 1) || (result == 2)) {
                         sleep(2);
                         break;
