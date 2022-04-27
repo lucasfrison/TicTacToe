@@ -44,6 +44,7 @@ char corpo[3][3];
 void main() {
     char arq_bin[] = "campeonato.bin"; 
     char jogador1, jogador2, jogada, nome1[100], nome2[100], nome1_res[100], nome2_res[100];
+    char confirma;
     int vez = 1,  atual = 0, linha, coluna, valida, fim, vit1 = 0, 
         vit2 = 0, vitcpu = 0, vit11 = 0, op, nivel, result, i, j;
     partida jogo, jogolido, *jogoptr = &jogo; 
@@ -140,7 +141,9 @@ void main() {
                 if (gerar_bin(arq_bin, jogoptr) == 0) 
                     printf("\nERRO AO GRAVAR NO ARQUIVO\n");               
         } 
-    } while (confirmar() != 'N');
+        if ((vit1 == vit2)&&(vit1 > 0)) confirma = 'S';
+        else confirma = confirmar(); 
+    } while (confirma != 'N');
     system("clear");
     if ((vit11 != 0) || (vitcpu != 0)) {
         printf("RESULTADO CONTRA O PC\n");
