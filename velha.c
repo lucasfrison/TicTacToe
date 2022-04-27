@@ -717,8 +717,8 @@ void imprime_campeonato(int MAX, char *nome_bin, char *nome_txt){
     printf("RESULTADO FINAL: ");
     printf(" %s  %d X %d  %s\n\n", nome1, vitoria1, vitoria2, nome2);
     if (vitoria1 == vitoria2) printf("EMPATE.\n");
-    else if (vitoria1 > vitoria2) printf("%s VENCEU O CAMPEONATO!\n", nome1);
-    else printf("%s VENCEU O CAMPEONATO!\n", nome2);
+    else if (vitoria1 > vitoria2) printf("!!! %s VENCEU O CAMPEONATO !!!\n", nome1);
+    else printf("!!! %s VENCEU O CAMPEONATO !!!\n", nome2);
     printf("----------------\n");
 }
 
