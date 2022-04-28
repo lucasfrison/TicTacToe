@@ -36,7 +36,7 @@ int gerar_bin(char *nome_arquivo, partida *Partida);
 partida ler_bin(char *nome_arquivo, int num_partida);
 void imprime_campeonato(int MAX, char *nome_bin, char *nome_txt); //PENDENTE
 void limpa_buffer();
-void ler_nome(char *nome, char mensagem);
+void ler_nome(char *nome, char mensagem, int MAX);
 
 //corpo do jogo
 char corpo[3][3];
@@ -626,9 +626,10 @@ Exemplo: Maria; X; José; 0*/
 void gerar_txt(char *nome1, char *nome2, char simbolo1, char simbolo2){
     FILE *jogadores = fopen("jogadores.txt", "w");
     char *str;
+    int MAX = 100;
     limpa_buffer();
-    ler_nome(nome1, '1');
-    ler_nome(nome2, '2');
+    ler_nome(nome1, '1', MAX);
+    ler_nome(nome2, '2', MAX);
     fprintf(jogadores, "%s%c\n", nome1, simbolo1);
     fprintf(jogadores, "%s%c", nome2, simbolo2);
     fclose(jogadores);
@@ -727,11 +728,11 @@ void limpa_buffer(){
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
-void ler_nome(char *nome, char mensagem){
+void ler_nome(char *nome, char mensagem, int MAX){
     int i;
 
     printf("Jogador %c, seu nome: ", mensagem);
-    fgets(nome,100,stdin); 
+    fgets(nome,MAX,stdin); 
     for (i = 0; i < strlen(nome); i++)
         nome[i] = toupper(nome[i]);
 }
