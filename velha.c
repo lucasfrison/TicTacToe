@@ -13,7 +13,7 @@ typedef struct Velha
     char resultado; // Resultado da Partida: X, 0 ou V(equivale a Velha - empate)
 } partida;
 
-//FUNCOES TRABALHO 1
+//FUNCOES TRABALHO 1 
 int jogada_usuario(int linha, int coluna, char jogada);
 void jogada_computador(char jogada, int nivel);
 int menu();
