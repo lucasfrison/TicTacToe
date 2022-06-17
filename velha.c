@@ -430,7 +430,7 @@ void avancado(char jogada) {
     int i, j, k = 2, l[3], c[3], d[2], ganhal[3], ganhac[3], 
     ganhad[2], maiorl, maiorc, maiord, escolha = -1, total = 0;
 
-    if (corpo[1][1] == ' ') corpo[1][1] = jogada;
+    if (corpo[2][1] == ' ') corpo[2][1] = jogada;
     else 
     {
         for (i = 0; i < 3; i++) {
