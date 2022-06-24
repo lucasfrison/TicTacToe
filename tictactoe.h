@@ -16,10 +16,9 @@
     
     typedef struct Velha
     {
-        int partida; /*número da partida (Ex: primeira(1), segunda(2), terceira(3), ….,
-        partida)*/
-        char jogVelha[3][3]; // Tabuleiro do jogo. Armazenará as jogadas
-        char resultado; // Resultado da Partida: X, 0 ou V(equivale a Velha - empate)
+        int partida; 
+        char jogVelha[3][3]; 
+        char resultado; 
     } Partida;
     
     //FUNCOES TRABALHO 1
