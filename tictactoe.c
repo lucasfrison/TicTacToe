@@ -486,7 +486,7 @@ void gerar_txt(char *nome1, char *nome2, char simbolo1, char simbolo2){
 A função deve ter como entrada os seguintes parâmetros: (1) parâmetro string com o nome
 do arquivo; (2) parâmetro Partida com os dados da partida. A função retorna 1 se a gravação
 for um sucesso e zero caso contrário.*/
-int gerar_bin(char *nome_arquivo, partida *Partida){
+int gerar_bin(char *nome_arquivo, Partida *partida){
     FILE *bin = fopen(nome_arquivo, "ab");
                                                 //<
     if (fwrite(Partida, 1, sizeof(partida), bin) != sizeof(partida)) {
@@ -504,11 +504,11 @@ arquivo; (2) parâmetro inteiro com o número da partida a ser lida. A função 
 os dados da partida que foi lida.*/
 partida ler_bin(char *nome_arquivo, int num_partida){
     FILE *bin = fopen(nome_arquivo, "rb");
-    partida jogo;
+    Partida jogo;
 
     do {
-        fread(&jogo, sizeof(partida), 1, bin);
-    } while (jogo.Partida != num_partida); 
+        fread(&jogo, sizeof(Partida), 1, bin);
+    } while (jogo.partida != num_partida); 
     fclose(bin);
     return jogo;
 }
@@ -543,7 +543,7 @@ void imprime_campeonato(int MAX, char *nome_bin, char *nome_txt){
             vitoria1++;
             vitoria2++;
         }
-        printf("\nPARTIDA %d\n\n", jogo.Partida);
+        printf("\nPARTIDA %d\n\n", jogo.partida);
         for (j = 0; j < 3; j++) {
             for (k = 0; k < 3; k++) 
                 if (k == 2)                   
