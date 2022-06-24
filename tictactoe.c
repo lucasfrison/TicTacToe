@@ -489,7 +489,7 @@ for um sucesso e zero caso contrário.*/
 int gerar_bin(char *nome_arquivo, Partida *partida){
     FILE *bin = fopen(nome_arquivo, "ab");
                                                 //<
-    if (fwrite(Partida, 1, sizeof(partida), bin) != sizeof(partida)) {
+    if (fwrite(partida, 1, sizeof(Partida), bin) != sizeof(Partida)) {
         fclose(bin);
         return 0;
     } else {
@@ -502,7 +502,7 @@ int gerar_bin(char *nome_arquivo, Partida *partida){
 A função deve ter como entrada os seguintes parâmetros: (1) parâmetro string com o nome do
 arquivo; (2) parâmetro inteiro com o número da partida a ser lida. A função retorna o registro com
 os dados da partida que foi lida.*/
-partida ler_bin(char *nome_arquivo, int num_partida){
+Partida ler_bin(char *nome_arquivo, int num_partida){
     FILE *bin = fopen(nome_arquivo, "rb");
     Partida jogo;
 
@@ -518,7 +518,7 @@ ganhou) e o placar final (Ex: Maria 10 X José 5) A Maria foi a campeã do Campe
 Velha!!!*/
 void imprime_campeonato(int MAX, char *nome_bin, char *nome_txt){
     int i, j, k, vitoria1 = 0, vitoria2 = 0;
-    partida jogo;
+    Partida jogo;
     FILE *txt = fopen(nome_txt, "r");
     char nome1[100], nome2[100], simbolo, simbolo2, quebra;
 
@@ -547,9 +547,9 @@ void imprime_campeonato(int MAX, char *nome_bin, char *nome_txt){
         for (j = 0; j < 3; j++) {
             for (k = 0; k < 3; k++) 
                 if (k == 2)                   
-                    if (j != 2) printf("  %c\n-----------------\n", jogo.JogVelha[j][k]);
-                    else printf("  %c\n", jogo.JogVelha[j][k]);                    
-                else printf("  %c  |", jogo.JogVelha[j][k]);
+                    if (j != 2) printf("  %c\n-----------------\n", jogo.jogVelha[j][k]);
+                    else printf("  %c\n", jogo.jogVelha[j][k]);                    
+                else printf("  %c  |", jogo.jogVelha[j][k]);
         }
         printf("\nRESULTADO: %c\n", jogo.resultado);
         if (jogo.resultado == 'V') printf("\nEMPATOU");
