@@ -6,11 +6,11 @@ void main() {
     char confirma;
     int vez = 1, vez2 = 1,  atual = 0, atual2 = 0, linha, coluna, valida, fim, vit1 = 0, 
         vit2 = 0, vitcpu = 0, vit11 = 0, op, nivel, result, i, j;
-    partida jogo, jogolido, *jogoptr = &jogo; 
+    Partida jogo, jogolido, *jogoptr = &jogo; 
     FILE *bin = fopen(arq_bin, "wb");
 
     fclose(bin);
-    jogo.Partida = 0;
+    jogo.partida = 0;
 
     do {
         valida = 0;
@@ -92,10 +92,10 @@ void main() {
                     }    
                 }    
                 inicio_jogada(nome1_res, nome2_res, vit1, vit2);
-                jogo.Partida++; 
+                jogo.partida++; 
                 for (i = 0; i < 3; i++) {
                     for (j = 0; j < 3; j++)
-                        jogo.JogVelha[i][j] = corpo[i][j];
+                        jogo.jogVelha[i][j] = corpo[i][j];
                 }
                 jogo.resultado = result == 2 ? 'V' : jogada;
                 if (gerar_bin(arq_bin, jogoptr) == 0) 
@@ -111,7 +111,7 @@ void main() {
         printf("J  %d x %d  PC\n\n", vit11, vitcpu);
     }    
     if ((vit1 != 0) || (vit2 != 0)) 
-        imprime_campeonato(jogo.Partida, arq_bin, "jogadores.txt");
+        imprime_campeonato(jogo.partida, arq_bin, "jogadores.txt");
 }       
 
 
