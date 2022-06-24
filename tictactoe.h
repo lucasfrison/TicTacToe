@@ -22,29 +22,29 @@
     } Partida;
     
     //FUNCOES TRABALHO 1
-    extern int jogada_usuario(int linha, int coluna, char jogada);
-    extern void jogada_computador(char jogada, int nivel);
+    extern int jogada_usuario(int, int, char);
+    extern void jogada_computador(char, int);
     extern int menu();
-    extern void escolha_simb(char *jogador1, char *jogador2);
+    extern void escolha_simb(char*, char*);
     extern void inicializa_velha();
-    extern int verifica_ganhador(char jogada);
+    extern int verifica_ganhador(char);
     extern void tabuleiro();
     extern int scanint();
     extern char confirmar();
-    extern void basico(char jogada);
-    extern void intermediario(char jogada);
-    extern void avancado(char jogada);
-    extern void inicio_jogada(char *mensagem, char *mensagem2, int vit, int vit2);
-    extern void valida_jogada(int valida, int *vez, int *atual, int *fim);
-    extern int resultado(char jogada, int *vit1, int *vit2, int atual, int modo, int fim); 
+    extern void basico(char);
+    extern void intermediario(char);
+    extern void avancado(char);
+    extern void inicio_jogada(char*, char*, int, int);
+    extern void valida_jogada(int, int*, int*, int*);
+    extern int resultado(char, int*, int*, int, int, int); 
     
     //FUNCOES NOVAS, TRABALHO 2
-    extern void gerar_txt(char *nome1, char *nome2, char simbolo1, char simbolo2);
-    extern int gerar_bin(char *nome_arquivo, Partida *partida); 
-    extern Partida ler_bin(char *nome_arquivo, int num_partida);
-    extern void imprime_campeonato(int MAX, char *nome_bin, char *nome_txt); //PENDENTE
+    extern void gerar_txt(char*, char*, char, char);
+    extern int gerar_bin(char*, Partida*); 
+    extern Partida ler_bin(char*, int);
+    extern void imprime_campeonato(int, char*, char*); //PENDENTE
     extern void limpa_buffer();
-    extern void ler_nome(char *nome, char mensagem, int MAX);
+    extern void ler_nome(char*, char, int);
 
 #endif
 
